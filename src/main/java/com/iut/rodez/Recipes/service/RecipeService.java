@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -26,5 +27,16 @@ public class RecipeService {
                 .stream()
                 .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<Recipes> getRecipesById(String id) {
+        List<Recipes> recipes = new ArrayList<>();
+        recipeRepository.findAll().forEach(recipe -> {
+            recipes.add(recipe);
+        });
+        return recipes
+                .stream()
+                .filter(recipe -> recipe.getId_recipe().equals(id))
+                .findFirst();
     }
 }
