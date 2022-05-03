@@ -1,7 +1,5 @@
 package com.iut.rodez.Recipes.model;
 
-import net.bytebuddy.description.type.TypeList;
-
 import javax.persistence.*;
 
 @Entity

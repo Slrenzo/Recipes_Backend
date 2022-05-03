@@ -2,8 +2,6 @@ package com.iut.rodez.Recipes.model;
 
 import javax.persistence.*;
 
-import java.util.List;
-
 @Entity
 public class Category {
 
