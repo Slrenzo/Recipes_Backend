@@ -29,7 +29,7 @@ public class RecipeService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Recipes> getRecipesById(String id) {
+    public Optional<Recipes> getRecipeById(String id) {
         List<Recipes> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipe -> {
             recipes.add(recipe);
