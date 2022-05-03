@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @Service
 public class RecipeService {
@@ -14,11 +17,14 @@ public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    public List<Recipes> getRecipes() {
+    public List<Recipes> getRecipes(String name) {
         List<Recipes> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipe -> {
             recipes.add(recipe);
         });
-        return recipes;
+        return recipes
+                .stream()
+                .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }
