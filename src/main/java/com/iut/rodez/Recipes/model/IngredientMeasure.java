@@ -3,15 +3,12 @@ package com.iut.rodez.Recipes.model;
 import javax.persistence.*;
 
 @Entity
-@IdClass(LinkRecipesId.class)
-public class LinkRecipes {
+public class IngredientMeasure {
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "code_recipe")
-    private Recipes recipes;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id_ingredient_measure;
 
-    @Id
     @OneToOne
     @JoinColumn(name = "code_ingredient")
     private Ingredients ingredients;
@@ -22,12 +19,12 @@ public class LinkRecipes {
     @JoinColumn(name = "units")
     private Units units;
 
-    public Recipes getRecipes() {
-        return recipes;
+    public String getId_ingredient_measure() {
+        return id_ingredient_measure;
     }
 
-    public void setRecipes(Recipes recipes) {
-        this.recipes = recipes;
+    public void setId_ingredient_measure(String id_ingredient_measure) {
+        this.id_ingredient_measure = id_ingredient_measure;
     }
 
     public Ingredients getIngredients() {

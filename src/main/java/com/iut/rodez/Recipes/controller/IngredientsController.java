@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,6 +21,6 @@ public class IngredientsController {
 
     @GetMapping("/ingredients/{id_category}")
     public List<Ingredients> getIngredientsByCategory(@PathVariable("id_category") String id_category) {
-        return ingredientsService.getIngredients(id_category);
+        return ingredientsService.getIngredientsByCategory(id_category);
     }
 }

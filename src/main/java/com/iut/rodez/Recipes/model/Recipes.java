@@ -1,6 +1,8 @@
 package com.iut.rodez.Recipes.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Recipes {
@@ -16,6 +18,16 @@ public class Recipes {
     @OneToOne
     @JoinColumn(name = "type")
     private TypeRecipe type;
+
+    @OneToMany
+    @JoinTable(name = "link_recipes",
+              joinColumns = @JoinColumn(name = "code_recipe"),
+              inverseJoinColumns = @JoinColumn(name = "code_ingredient_measure"))
+    private List<IngredientMeasure> ingredientsMeasures = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "id_step_recipe")
+    private List<Step> steps = new ArrayList<>();
 
     public String getId_recipe() {
         return id_recipe;
@@ -47,5 +59,21 @@ public class Recipes {
 
     public void setType(TypeRecipe type) {
         this.type = type;
+    }
+
+    public List<IngredientMeasure> getIngredientsMeasures() {
+        return ingredientsMeasures;
+    }
+
+    public void setIngredientsMeasures(List<IngredientMeasure> ingredientsMeasures) {
+        this.ingredientsMeasures = ingredientsMeasures;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
     }
 }
