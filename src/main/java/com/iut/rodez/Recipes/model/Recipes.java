@@ -1,5 +1,6 @@
 package com.iut.rodez.Recipes.model;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class Recipes {
     @OneToMany
     @JoinColumn(name = "id_step_recipe")
     private List<Step> steps = new ArrayList<>();
+
+    private int number_person;
 
     public String getId_recipe() {
         return id_recipe;
@@ -75,5 +78,13 @@ public class Recipes {
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
+    }
+
+    public int getNumber_person() {
+        return number_person;
+    }
+
+    public void setNumber_person(int number_person) {
+        this.number_person = number_person;
     }
 }
