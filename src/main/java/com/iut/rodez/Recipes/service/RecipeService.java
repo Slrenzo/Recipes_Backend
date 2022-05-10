@@ -65,4 +65,16 @@ public class RecipeService {
                 .filter(recipe -> recipe.getId_recipe().equals(id))
                 .findFirst();
     }
+
+    public void postRecipe(Recipes recipe) {
+        recipeRepository.save(recipe);
+    }
+
+    public void deleteRecipe(String id) {
+        recipeRepository.deleteById(id);
+    }
+
+    public void putRecipe(Recipes recipe, String id) {
+        recipeRepository.save(recipe);
+    }
 }

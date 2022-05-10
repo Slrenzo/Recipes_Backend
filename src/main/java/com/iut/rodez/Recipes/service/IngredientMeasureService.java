@@ -21,4 +21,16 @@ public class IngredientMeasureService {
         });
         return ingredientsMeasures;
     }
+
+    public void postIngredientMeasure(IngredientMeasure ingredientMeasure) {
+        ingredientMeasureRepository.save(ingredientMeasure);
+    }
+
+    public void deleteIngredientMeasure(String id) {
+        ingredientMeasureRepository.deleteById(id);
+    }
+
+    public void putIngredientMeasure(IngredientMeasure ingredientMeasure, String id) {
+        ingredientMeasureRepository.save(ingredientMeasure);
+    }
 }

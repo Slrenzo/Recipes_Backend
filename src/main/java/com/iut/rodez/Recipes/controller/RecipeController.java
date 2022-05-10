@@ -24,4 +24,19 @@ public class RecipeController {
     public Optional<Recipes> getRecipesById(@PathVariable("id") String id) {
         return recipeService.getRecipeById(id);
     }
+
+    @PostMapping("/recipes")
+    public void postRecipe(@RequestBody Recipes recipe) {
+        recipeService.postRecipe(recipe);
+    }
+
+    @DeleteMapping("/recipes/{id}")
+    public void deleteRecipe(@PathVariable String id) {
+        recipeService.deleteRecipe(id);
+    }
+
+    @PutMapping("recipes/{id}")
+    public void putRecipe(@RequestBody Recipes recipe,@PathVariable String id) {
+        recipeService.putRecipe(recipe, id);
+    }
 }

@@ -50,4 +50,16 @@ public class IngredientsService {
                 .filter(ingredient -> ingredient.getId_ingredient().equals(id))
                 .findFirst();
     }
+
+    public void postIngredient(Ingredients ingredient) {
+        ingredientsRepository.save(ingredient);
+    }
+
+    public void deleteIngredient(String id) {
+        ingredientsRepository.deleteById(id);
+    }
+
+    public void putIngredient(Ingredients ingredient, String id) {
+        ingredientsRepository.save(ingredient);
+    }
 }

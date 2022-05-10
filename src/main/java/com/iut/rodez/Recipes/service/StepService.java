@@ -21,4 +21,16 @@ public class StepService {
         });
         return steps;
     }
+
+    public void postStep(Step step) {
+        stepRepository.save(step);
+    }
+
+    public void deleteStep(String id) {
+        stepRepository.deleteById(id);
+    }
+
+    public void putStep(Step step, String id) {
+        stepRepository.save(step);
+    }
 }
