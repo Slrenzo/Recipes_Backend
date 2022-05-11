@@ -17,18 +17,14 @@ public class IngredientsController {
     private IngredientsService ingredientsService;
 
     @GetMapping("/ingredients")
-    public List<Ingredients> getIngredients(@RequestParam(value = "name", required = false) String name) {
-        return ingredientsService.getIngredients(name);
+    public List<Ingredients> getIngredients(@RequestParam(value = "name", required = false) String name,
+                                            @RequestParam(value = "categoryIn", required = false) String id_category) {
+        return ingredientsService.getIngredients(name, id_category);
     }
 
     @GetMapping("/ingredients/{id}")
     public Optional<Ingredients> getIngredientsByID(@PathVariable("id") String id) {
         return ingredientsService.getIngredientByID(id);
-    }
-
-    @GetMapping("/ingredients/category-filter/{id_category}")
-    public List<Ingredients> getIngredientsByCategory(@PathVariable("id_category") String id_category) {
-        return ingredientsService.getIngredientsByCategory(id_category);
     }
 
     @PostMapping("/ingredients")

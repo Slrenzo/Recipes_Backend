@@ -18,18 +18,7 @@ public class IngredientsService {
     @Autowired
     private IngredientsRepository ingredientsRepository;
 
-    public List<Ingredients> getIngredients(String name) {
-        List<Ingredients> ingredients = new ArrayList<>();
-        ingredientsRepository.findAll().forEach(ingredient -> {
-            ingredients.add(ingredient);
-        });
-        return ingredients
-                .stream()
-                .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Ingredients> getIngredientsByCategory(String id_category) {
+    public List<Ingredients> getIngredients(String name, String id_category) {
         List<Ingredients> ingredients = new ArrayList<>();
         ingredientsRepository.findAll().forEach(ingredient -> {
             ingredients.add(ingredient);
@@ -37,6 +26,7 @@ public class IngredientsService {
         return ingredients
                 .stream()
                 .filter(ingredient -> ingredient.getCategory().getId_category().equals(id_category))
+                .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
