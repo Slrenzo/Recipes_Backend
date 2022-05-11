@@ -1,6 +1,6 @@
 package com.iut.rodez.Recipes.service;
 
-import com.iut.rodez.Recipes.model.Recipes;
+import com.iut.rodez.Recipes.model.Recipe;
 import com.iut.rodez.Recipes.model.Step;
 import com.iut.rodez.Recipes.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    public List<Recipes> getRecipes(String name) {
-        List<Recipes> recipes = new ArrayList<>();
+    public List<Recipe> getRecipes(String name) {
+        List<Recipe> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipe -> {
             recipes.add(recipe);
         });
@@ -43,8 +43,8 @@ public class RecipeService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Recipes> getRecipeById(String id) {
-        List<Recipes> recipes = new ArrayList<>();
+    public Optional<Recipe> getRecipeById(String id) {
+        List<Recipe> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipe -> {
             recipes.add(recipe);
         });
@@ -66,7 +66,7 @@ public class RecipeService {
                 .findFirst();
     }
 
-    public void postRecipe(Recipes recipe) {
+    public void postRecipe(Recipe recipe) {
         recipeRepository.save(recipe);
     }
 
@@ -74,7 +74,7 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public void putRecipe(Recipes recipe, String id) {
+    public void putRecipe(Recipe recipe, String id) {
         recipeRepository.save(recipe);
     }
 }

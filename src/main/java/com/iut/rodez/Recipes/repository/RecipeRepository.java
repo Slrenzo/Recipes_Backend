@@ -1,7 +1,7 @@
 package com.iut.rodez.Recipes.repository;
 
-import com.iut.rodez.Recipes.model.Recipes;
+import com.iut.rodez.Recipes.model.Recipe;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RecipeRepository extends CrudRepository<Recipes, String> {
+public interface RecipeRepository extends CrudRepository<Recipe, String> {
 }

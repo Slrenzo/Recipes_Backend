@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Recipes {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class Recipes {
     private TypeRecipe type;
 
     @OneToMany
-    @JoinTable(name = "link_recipes",
+    @JoinTable(name = "link_recipe",
               joinColumns = @JoinColumn(name = "code_recipe"),
               inverseJoinColumns = @JoinColumn(name = "code_ingredient_measure"))
     private List<IngredientMeasure> ingredientsMeasures = new ArrayList<>();

@@ -11,13 +11,13 @@ public class IngredientMeasure {
 
     @OneToOne
     @JoinColumn(name = "code_ingredient")
-    private Ingredients ingredients;
+    private Ingredient ingredients;
 
     private double quantity;
 
     @OneToOne
     @JoinColumn(name = "units")
-    private Units units;
+    private Unit units;
 
     public String getId_ingredient_measure() {
         return id_ingredient_measure;
@@ -27,11 +27,11 @@ public class IngredientMeasure {
         this.id_ingredient_measure = id_ingredient_measure;
     }
 
-    public Ingredients getIngredients() {
+    public Ingredient getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredients ingredients) {
+    public void setIngredients(Ingredient ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -43,11 +43,11 @@ public class IngredientMeasure {
         this.quantity = quantity;
     }
 
-    public Units getUnits() {
+    public Unit getUnits() {
         return units;
     }
 
-    public void setUnits(Units units) {
+    public void setUnits(Unit units) {
         this.units = units;
     }
 }

@@ -3,7 +3,7 @@ package com.iut.rodez.Recipes.model;
 import javax.persistence.*;
 
 @Entity
-public class Ingredients {
+public class Ingredient {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
