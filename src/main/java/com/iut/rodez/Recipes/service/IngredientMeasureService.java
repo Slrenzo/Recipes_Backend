@@ -16,9 +16,7 @@ public class IngredientMeasureService {
 
     public List<IngredientMeasure> getIngredientsMeasures() {
         List<IngredientMeasure> ingredientsMeasures = new ArrayList<>();
-        ingredientMeasureRepository.findAll().forEach(link -> {
-            ingredientsMeasures.add(link);
-        });
+        ingredientMeasureRepository.findAll().forEach(ingredientsMeasures::add);
         return ingredientsMeasures;
     }
 

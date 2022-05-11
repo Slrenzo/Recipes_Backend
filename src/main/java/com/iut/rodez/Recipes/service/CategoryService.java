@@ -16,9 +16,7 @@ public class CategoryService {
 
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll().forEach(category -> {
-            categories.add(category);
-        });
+        categoryRepository.findAll().forEach(categories::add);
         return categories;
     }
 }

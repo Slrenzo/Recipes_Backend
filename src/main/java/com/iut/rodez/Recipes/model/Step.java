@@ -1,7 +1,6 @@
 package com.iut.rodez.Recipes.model;
 
 import javax.persistence.*;
-import java.util.Comparator;
 
 @Entity
 public class Step {

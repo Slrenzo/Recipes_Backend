@@ -20,9 +20,7 @@ public class IngredientService {
 
     public List<Ingredient> getIngredients(String name, String id_category) {
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepository.findAll().forEach(ingredient -> {
-            ingredients.add(ingredient);
-        });
+        ingredientRepository.findAll().forEach(ingredients::add);
         return ingredients
                 .stream()
                 .filter(ingredient -> isBlank(id_category) || ingredient.getCategory().getId_category().equals(id_category))
@@ -32,9 +30,7 @@ public class IngredientService {
 
     public Optional<Ingredient> getIngredientByID(String id) {
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepository.findAll().forEach(ingredient -> {
-            ingredients.add(ingredient);
-        });
+        ingredientRepository.findAll().forEach(ingredients::add);
         return ingredients
                 .stream()
                 .filter(ingredient -> ingredient.getId_ingredient().equals(id))

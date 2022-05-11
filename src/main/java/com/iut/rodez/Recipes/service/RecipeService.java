@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,19 +21,13 @@ public class RecipeService {
 
     public List<Recipe> getRecipes(String name) {
         List<Recipe> recipes = new ArrayList<>();
-        recipeRepository.findAll().forEach(recipe -> {
-            recipes.add(recipe);
-        });
+        recipeRepository.findAll().forEach(recipes::add);
         recipes
-                .stream()
                 .forEach(recipe -> {
                     List<Step> steps = new ArrayList<>(recipe.getSteps());
                     recipe
                             .getSteps()
-                            .stream()
-                            .forEach(step -> {
-                                steps.set(step.getStep_order() - 1, step);
-                            });
+                            .forEach(step -> steps.set(step.getStep_order() - 1, step));
                     recipe.setSteps(steps);
                 });
         return recipes
@@ -45,19 +38,13 @@ public class RecipeService {
 
     public Optional<Recipe> getRecipeById(String id) {
         List<Recipe> recipes = new ArrayList<>();
-        recipeRepository.findAll().forEach(recipe -> {
-            recipes.add(recipe);
-        });
+        recipeRepository.findAll().forEach(recipes::add);
         recipes
-                .stream()
                 .forEach(recipe -> {
                     List<Step> steps = new ArrayList<>(recipe.getSteps());
                     recipe
                             .getSteps()
-                            .stream()
-                            .forEach(step -> {
-                                steps.set(step.getStep_order() - 1, step);
-                            });
+                            .forEach(step -> steps.set(step.getStep_order() - 1, step));
                     recipe.setSteps(steps);
                 });
         return recipes
