@@ -23,7 +23,7 @@ public class IngredientService {
         ingredientRepository.findAll().forEach(ingredients::add);
         return ingredients
                 .stream()
-                .filter(ingredient -> isBlank(id_category) || ingredient.getCategory().getId_category().equals(id_category))
+                .filter(ingredient -> id_category == null || isBlank(id_category) || ingredient.getCategory().getId_category().equals(id_category))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
