@@ -32,7 +32,7 @@ public class RecipeService {
                 });
         return recipes
                 .stream()
-                .filter(recipe -> id_type_recipe == null || isBlank(id_type_recipe) || recipe.getType().getId_type().equals(id_type_recipe))
+                .filter(recipe -> isBlank(id_type_recipe) || recipe.getType().getId_type().equals(id_type_recipe))
                 .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
