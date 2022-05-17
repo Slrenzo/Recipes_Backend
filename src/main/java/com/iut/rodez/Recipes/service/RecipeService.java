@@ -70,8 +70,8 @@ public class RecipeService {
     public List<Recipe> getRecipeForHomepage() {
         List<Recipe> allRecipes = new ArrayList<>();
         recipeRepository.findAll().forEach(allRecipes::add);
-        List<Recipe> recipes = new ArrayList<>();
-        while (recipes.size() < 8) {
+        List<Recipe> recipes = new ArrayList<>(0);
+        while (recipes.size() < 8 && recipes.size() < allRecipes.size()) {
             recipes.add(allRecipes.get(recipes.size()));
         }
         return recipes;
