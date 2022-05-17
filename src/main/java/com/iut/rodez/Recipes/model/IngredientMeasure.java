@@ -1,12 +1,18 @@
 package com.iut.rodez.Recipes.model;
 
+import net.bytebuddy.utility.RandomString;
+
 import javax.persistence.*;
 
 @Entity
 public class IngredientMeasure {
 
+    @PrePersist
+    private void ensureId(){
+        this.setId_ingredient_measure(RandomString.make(15));
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id_ingredient_measure;
 
     @OneToOne

@@ -1,15 +1,18 @@
 package com.iut.rodez.Recipes.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import net.bytebuddy.utility.RandomString;
+
+import javax.persistence.*;
 
 @Entity
 public class Unit {
 
+    @PrePersist
+    private void ensureId(){
+        this.setId_unit(RandomString.make(15));
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id_unit;
 
     private String name;

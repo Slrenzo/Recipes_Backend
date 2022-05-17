@@ -1,6 +1,8 @@
 package com.iut.rodez.Recipes.model;
 
 
+import net.bytebuddy.utility.RandomString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +10,12 @@ import java.util.List;
 @Entity
 public class Recipe {
 
+    @PrePersist
+    private void ensureId(){
+        this.setId_recipe(RandomString.make(15));
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id_recipe;
 
     private String name;

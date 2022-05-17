@@ -1,12 +1,20 @@
 package com.iut.rodez.Recipes.model;
 
+import net.bytebuddy.utility.RandomString;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.convert.DataSizeUnit;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Ingredient {
 
+    @PrePersist
+    private void ensureId(){
+        this.setId_ingredient(RandomString.make(15));
+    }
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private String id_ingredient;
 
     private String name;
