@@ -9,7 +9,7 @@ public class TypeRecipe {
 
     @PrePersist
     private void ensureId(){
-        this.setId_type(RandomString.make(15));
+        this.setId_type(RandomString.make(2));
     }
 
     @Id

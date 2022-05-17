@@ -9,7 +9,7 @@ public class Category {
 
     @PrePersist
     private void ensureId(){
-        this.setId_category(RandomString.make(15));
+        this.setId_category(RandomString.make(2));
     }
 
     @Id

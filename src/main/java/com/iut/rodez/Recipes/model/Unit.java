@@ -9,7 +9,7 @@ public class Unit {
 
     @PrePersist
     private void ensureId(){
-        this.setId_unit(RandomString.make(15));
+        this.setId_unit(RandomString.make(2));
     }
 
     @Id
