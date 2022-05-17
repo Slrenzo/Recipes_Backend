@@ -20,7 +20,7 @@ public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    public List<Recipe> getRecipes(String name, String id_type_recipe) {
+    public List<Recipe> getRecipes(String name, List<String> ids_type_recipe) {
         List<Recipe> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipes::add);
         recipes
@@ -33,7 +33,7 @@ public class RecipeService {
                 });
         return recipes
                 .stream()
-                .filter(recipe -> isBlank(id_type_recipe) || recipe.getType().getId_type().equals(id_type_recipe))
+                .filter(recipe -> ids_type_recipe.isEmpty() || ids_type_recipe.contains(recipe.getType().getId_type()))
                 .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }

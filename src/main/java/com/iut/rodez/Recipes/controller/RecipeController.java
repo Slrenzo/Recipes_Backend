@@ -22,8 +22,8 @@ public class RecipeController {
 
     @GetMapping("/recipes")
     public List<Recipe> getRecipes(@RequestParam(value = "name", required = false) String name,
-                                   @RequestParam(value = "type", required = false) String id_type_recipe) {
-        return recipeService.getRecipes(name, id_type_recipe);
+                                   @RequestParam(value = "type", required = false) List<String> ids_type_recipe) {
+        return recipeService.getRecipes(name, ids_type_recipe);
     }
 
     @GetMapping("/recipes/{id}")

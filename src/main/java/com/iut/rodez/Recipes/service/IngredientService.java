@@ -18,12 +18,12 @@ public class IngredientService {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    public List<Ingredient> getIngredients(String name, String id_category) {
+    public List<Ingredient> getIngredients(String name, List<String> ids_category) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
         return ingredients
                 .stream()
-                .filter(ingredient -> isBlank(id_category) || ingredient.getCategory().getId_category().equals(id_category))
+                .filter(ingredient -> ids_category.isEmpty() || ids_category.contains(ingredient.getCategory().getId_category()))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }

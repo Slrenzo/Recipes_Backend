@@ -17,8 +17,8 @@ public class IngredientController {
 
     @GetMapping("/ingredients")
     public List<Ingredient> getIngredients(@RequestParam(value = "name", required = false) String name,
-                                           @RequestParam(value = "category", required = false) String id_category) {
-        return ingredientService.getIngredients(name, id_category);
+                                           @RequestParam(value = "category", required = false) List<String> ids_category) {
+        return ingredientService.getIngredients(name, ids_category);
     }
 
     @GetMapping("/ingredients/{id}")
