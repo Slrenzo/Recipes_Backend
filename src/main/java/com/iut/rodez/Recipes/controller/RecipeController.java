@@ -15,6 +15,11 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
+    @GetMapping("/")
+    public List<Recipe> getRecipeForHomepage() {
+        return recipeService.getRecipeForHomepage();
+    }
+
     @GetMapping("/recipes")
     public List<Recipe> getRecipes(@RequestParam(value = "name", required = false) String name,
                                    @RequestParam(value = "type", required = false) String id_type_recipe) {

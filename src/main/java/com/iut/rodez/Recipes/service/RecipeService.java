@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,5 +65,15 @@ public class RecipeService {
 
     public void putRecipe(Recipe recipe, String id) {
         recipeRepository.save(recipe);
+    }
+
+    public List<Recipe> getRecipeForHomepage() {
+        List<Recipe> allRecipes = new ArrayList<>();
+        recipeRepository.findAll().forEach(allRecipes::add);
+        List<Recipe> recipes = new ArrayList<>();
+        while (recipes.size() < 8) {
+            recipes.add(allRecipes.get(recipes.size()));
+        }
+        return recipes;
     }
 }
