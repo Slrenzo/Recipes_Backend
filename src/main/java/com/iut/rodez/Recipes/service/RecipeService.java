@@ -33,7 +33,9 @@ public class RecipeService {
                 });
         return recipes
                 .stream()
-                .filter(recipe -> ids_type_recipe.isEmpty() || ids_type_recipe.contains(recipe.getType().getId_type()))
+                .filter(recipe -> ids_type_recipe == null
+                                  || ids_type_recipe.isEmpty()
+                                  || ids_type_recipe.contains(recipe.getType().getId_type()))
                 .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
