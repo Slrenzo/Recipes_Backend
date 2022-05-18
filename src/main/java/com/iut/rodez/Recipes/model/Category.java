@@ -9,19 +9,19 @@ public class Category {
 
     @PrePersist
     private void ensureId(){
-        this.setId_category(RandomString.make(2));
+        this.setId(RandomString.make(2));
     }
 
     @Id
-    private String id_category;
+    private String id;
     private String name;
 
-    public String getId_category() {
-        return id_category;
+    public String getId() {
+        return id;
     }
 
-    public void setId_category(String id_category) {
-        this.id_category = id_category;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

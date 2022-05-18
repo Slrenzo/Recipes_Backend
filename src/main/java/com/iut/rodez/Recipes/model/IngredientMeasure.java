@@ -9,36 +9,36 @@ public class IngredientMeasure {
 
     @PrePersist
     private void ensureId(){
-        this.setId_ingredient_measure(RandomString.make(15));
+        this.setId(RandomString.make(15));
     }
 
     @Id
-    private String id_ingredient_measure;
+    private String id;
 
     @OneToOne
-    @JoinColumn(name = "code_ingredient")
-    private Ingredient ingredients;
+    @JoinColumn(name = "id_ingredient")
+    private Ingredient ingredient;
 
     private double quantity;
 
     @OneToOne
-    @JoinColumn(name = "units")
-    private Unit units;
+    @JoinColumn(name = "id_unit")
+    private Unit unit;
 
-    public String getId_ingredient_measure() {
-        return id_ingredient_measure;
+    public String getId() {
+        return id;
     }
 
-    public void setId_ingredient_measure(String id_ingredient_measure) {
-        this.id_ingredient_measure = id_ingredient_measure;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Ingredient getIngredients() {
-        return ingredients;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredients(Ingredient ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     public double getQuantity() {
@@ -49,11 +49,11 @@ public class IngredientMeasure {
         this.quantity = quantity;
     }
 
-    public Unit getUnits() {
-        return units;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setUnits(Unit units) {
-        this.units = units;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

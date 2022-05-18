@@ -1,34 +1,31 @@
 package com.iut.rodez.Recipes.model;
 
 import net.bytebuddy.utility.RandomString;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.boot.convert.DataSizeUnit;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class Ingredient {
 
     @PrePersist
     private void ensureId(){
-        this.setId_ingredient(RandomString.make(15));
+        this.setId(RandomString.make(15));
     }
     @Id
-    private String id_ingredient;
+    private String id;
 
     private String name;
 
     @OneToOne
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "id_category")
     private Category category;
 
-    public String getId_ingredient() {
-        return id_ingredient;
+    public String getId() {
+        return id;
     }
 
-    public void setId_ingredient(String id_ingredient) {
-        this.id_ingredient = id_ingredient;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

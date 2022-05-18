@@ -12,38 +12,38 @@ public class Recipe {
 
     @PrePersist
     private void ensureId(){
-        this.setId_recipe(RandomString.make(15));
+        this.setId(RandomString.make(15));
     }
 
     @Id
-    private String id_recipe;
+    private String id;
 
     private String name;
 
     private int time;
 
     @OneToOne
-    @JoinColumn(name = "type")
-    private TypeRecipe type;
+    @JoinColumn(name = "id_type")
+    private Type type;
 
     @OneToMany
     @JoinTable(name = "link_recipe",
-              joinColumns = @JoinColumn(name = "code_recipe"),
-              inverseJoinColumns = @JoinColumn(name = "code_ingredient_measure"))
+              joinColumns = @JoinColumn(name = "id_recipe"),
+              inverseJoinColumns = @JoinColumn(name = "id_ingredient_measure"))
     private List<IngredientMeasure> ingredientsMeasures = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "id_step_recipe")
+    @JoinColumn(name = "id_recipe")
     private List<Step> steps = new ArrayList<>();
 
     private int number_person;
 
-    public String getId_recipe() {
-        return id_recipe;
+    public String getId() {
+        return id;
     }
 
-    public void setId_recipe(String id_recipe) {
-        this.id_recipe = id_recipe;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -62,11 +62,11 @@ public class Recipe {
         this.time = time;
     }
 
-    public TypeRecipe getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TypeRecipe type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

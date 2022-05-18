@@ -9,20 +9,20 @@ public class Unit {
 
     @PrePersist
     private void ensureId(){
-        this.setId_unit(RandomString.make(2));
+        this.setId(RandomString.make(2));
     }
 
     @Id
-    private String id_unit;
+    private String id;
 
     private String name;
 
-    public String getId_unit() {
-        return id_unit;
+    public String getId() {
+        return id;
     }
 
-    public void setId_unit(String id_unit) {
-        this.id_unit = id_unit;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

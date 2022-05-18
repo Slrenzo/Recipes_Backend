@@ -9,22 +9,22 @@ public class Step {
 
     @PrePersist
     private void ensureId(){
-        this.setId_step(RandomString.make(15));
+        this.setId(RandomString.make(15));
     }
 
     @Id
-    private String id_step;
+    private String id;
 
     private String descr;
 
     private int step_order;
 
-    public String getId_step() {
-        return id_step;
+    public String getId() {
+        return id;
     }
 
-    public void setId_step(String id_step) {
-        this.id_step = id_step;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescr() {

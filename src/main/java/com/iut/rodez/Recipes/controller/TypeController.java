@@ -1,7 +1,7 @@
 package com.iut.rodez.Recipes.controller;
 
-import com.iut.rodez.Recipes.model.TypeRecipe;
-import com.iut.rodez.Recipes.service.TypeRecipeService;
+import com.iut.rodez.Recipes.model.Type;
+import com.iut.rodez.Recipes.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +11,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class TypeRecipeController {
+public class TypeController {
 
     @Autowired
-    private TypeRecipeService typeRecipeService;
+    private TypeService typeService;
 
-    @GetMapping("/types_recipe")
-    public List<TypeRecipe> getTypesRecipe() {
-        return typeRecipeService.getTypesRecipe();
+    @GetMapping("/types")
+    public List<Type> getTypesRecipe() {
+        return typeService.getTypesRecipe();
     }
 }

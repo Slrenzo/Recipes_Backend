@@ -22,8 +22,8 @@ public class IngredientController {
     }
 
     @GetMapping("/ingredients/{id}")
-    public Optional<Ingredient> getIngredientsByID(@PathVariable("id") String id) {
-        return ingredientService.getIngredientByID(id);
+    public Optional<Ingredient> getIngredientsById(@PathVariable("id") String id) {
+        return ingredientService.getIngredientById(id);
     }
 
     @PostMapping("/ingredients")

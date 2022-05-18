@@ -25,17 +25,17 @@ public class IngredientService {
                 .stream()
                 .filter(ingredient -> ids_category == null
                                       || ids_category.isEmpty()
-                                      || ids_category.contains(ingredient.getCategory().getId_category()))
+                                      || ids_category.contains(ingredient.getCategory().getId()))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    public Optional<Ingredient> getIngredientByID(String id) {
+    public Optional<Ingredient> getIngredientById(String id) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
         return ingredients
                 .stream()
-                .filter(ingredient -> ingredient.getId_ingredient().equals(id))
+                .filter(ingredient -> ingredient.getId().equals(id))
                 .findFirst();
     }
 

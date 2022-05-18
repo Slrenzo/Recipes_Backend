@@ -35,7 +35,7 @@ public class RecipeService {
                 .stream()
                 .filter(recipe -> ids_type_recipe == null
                                   || ids_type_recipe.isEmpty()
-                                  || ids_type_recipe.contains(recipe.getType().getId_type()))
+                                  || ids_type_recipe.contains(recipe.getType().getId()))
                 .filter(recipe -> isBlank(name) || recipe.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
@@ -53,7 +53,7 @@ public class RecipeService {
                 });
         return recipes
                 .stream()
-                .filter(recipe -> recipe.getId_recipe().equals(id))
+                .filter(recipe -> recipe.getId().equals(id))
                 .findFirst();
     }
 
