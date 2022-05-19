@@ -1,8 +1,15 @@
 package com.iut.rodez.Recipes.service;
 
+import com.iut.rodez.Recipes.model.Category;
 import com.iut.rodez.Recipes.model.Ingredient;
+import com.iut.rodez.Recipes.model.IngredientRequest;
+import com.iut.rodez.Recipes.repository.CategoryRepository;
 import com.iut.rodez.Recipes.repository.IngredientRepository;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +24,12 @@ public class IngredientService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<Ingredient> getIngredients(String name, List<String> ids_category) {
         List<Ingredient> ingredients = new ArrayList<>();
@@ -39,8 +52,21 @@ public class IngredientService {
                 .findFirst();
     }
 
-    public void postIngredient(Ingredient ingredient) {
-        ingredientRepository.save(ingredient);
+    public ResponseEntity<HttpStatus> postIngredient(IngredientRequest ingredientRequest) {
+        Ingredient ingredient = new Ingredient();
+        List<Category> categories;
+        categories = categoryService.getCategories();
+        List<String> categoryIds = new ArrayList<>();
+        categories.forEach(category -> categoryIds.add(category.getId()));
+        if (categoryIds.contains(ingredientRequest.getCategoryId())) {
+            ingredient.setName(ingredientRequest.getName());
+            ingredient.setCategory(categories.stream().filter(
+                    category -> category.getId().equals(ingredientRequest.getCategoryId())
+            ).findFirst().get());
+            ingredientRepository.save(ingredient);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     public void deleteIngredient(String id) {

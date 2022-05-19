@@ -1,8 +1,11 @@
 package com.iut.rodez.Recipes.controller;
 
 import com.iut.rodez.Recipes.model.Ingredient;
+import com.iut.rodez.Recipes.model.IngredientRequest;
 import com.iut.rodez.Recipes.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +19,8 @@ public class IngredientController {
     private IngredientService ingredientService;
 
     @GetMapping("/ingredients")
-    public List<Ingredient> getIngredients(@RequestParam(value = "name", required = false) String name,
-                                           @RequestParam(value = "category", required = false) List<String> ids_category) {
+    public List<Ingredient> getIngredients(@RequestParam(value = "name") String name,
+                                           @RequestParam(value = "category") List<String> ids_category) {
         return ingredientService.getIngredients(name, ids_category);
     }
 
@@ -27,8 +30,8 @@ public class IngredientController {
     }
 
     @PostMapping("/ingredients")
-    public void postIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.postIngredient(ingredient);
+    public ResponseEntity<HttpStatus> postIngredient(@RequestBody IngredientRequest ingredientRequest) {
+        return ingredientService.postIngredient(ingredientRequest);
     }
 
     @DeleteMapping("/ingredients/{id}")

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -18,5 +19,9 @@ public class CategoryService {
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(categories::add);
         return categories;
+    }
+
+    public Optional<Category> getCategoryById(String id) {
+        return categoryRepository.findById(id);
     }
 }
