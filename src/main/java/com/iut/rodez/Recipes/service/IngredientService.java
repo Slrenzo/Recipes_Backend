@@ -58,15 +58,15 @@ public class IngredientService {
         categories = categoryService.getCategories();
         List<String> categoryIds = new ArrayList<>();
         categories.forEach(category -> categoryIds.add(category.getId()));
-        if (categoryIds.contains(ingredientRequest.getCategoryId())) {
-            ingredient.setName(ingredientRequest.getName());
-            ingredient.setCategory(categories.stream().filter(
-                    category -> category.getId().equals(ingredientRequest.getCategoryId())
-            ).findFirst().get());
-            ingredientRepository.save(ingredient);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ingredient.setName(ingredientRequest.getName());
+        ingredient.setCategory(categories.stream().filter(
+                category -> category.getId().equals(ingredientRequest.getCategoryId())
+        ).findFirst().get());
+        ingredientRepository.save(ingredient);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     public void deleteIngredient(String id) {
