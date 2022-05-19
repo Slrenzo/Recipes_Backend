@@ -61,9 +61,13 @@ public class IngredientService {
         if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-//        List<String> categoryNames = new ArrayList<>();
-//        categories.forEach(category -> categoryNames.add(category.getName()));
-//        if ()
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredients::add);
+        List<String> names = new ArrayList<>();
+        ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
+        if (names.contains(ingredientRequest.getName())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         ingredient.setName(ingredientRequest.getName());
         ingredient.setCategory(categories.stream().filter(
                 category -> category.getId().equals(ingredientRequest.getCategoryId())
@@ -83,6 +87,13 @@ public class IngredientService {
         List<String> categoryIds = new ArrayList<>();
         categories.forEach(category -> categoryIds.add(category.getId()));
         if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredients::add);
+        List<String> names = new ArrayList<>();
+        ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
+        if (names.contains(ingredientRequest.getName())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ingredient.setName(ingredientRequest.getName());
