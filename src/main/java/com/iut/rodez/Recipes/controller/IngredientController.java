@@ -40,7 +40,7 @@ public class IngredientController {
     }
 
     @PutMapping("ingredients/{id}")
-    public void putIngredient(@RequestBody Ingredient ingredient,@PathVariable String id) {
-        ingredientService.putIngredient(ingredient, id);
+    public ResponseEntity<HttpStatus> putIngredient(@RequestBody IngredientRequest ingredientRequest,@PathVariable String id) {
+        return ingredientService.putIngredient(ingredientRequest, id);
     }
 }

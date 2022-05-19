@@ -61,6 +61,9 @@ public class IngredientService {
         if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+//        List<String> categoryNames = new ArrayList<>();
+//        categories.forEach(category -> categoryNames.add(category.getName()));
+//        if ()
         ingredient.setName(ingredientRequest.getName());
         ingredient.setCategory(categories.stream().filter(
                 category -> category.getId().equals(ingredientRequest.getCategoryId())
@@ -73,7 +76,20 @@ public class IngredientService {
         ingredientRepository.deleteById(id);
     }
 
-    public void putIngredient(Ingredient ingredient, String id) {
+    public ResponseEntity<HttpStatus> putIngredient(IngredientRequest ingredientRequest, String id) {
+        Ingredient ingredient = ingredientRepository.findById(id).get();
+        List<Category> categories;
+        categories = categoryService.getCategories();
+        List<String> categoryIds = new ArrayList<>();
+        categories.forEach(category -> categoryIds.add(category.getId()));
+        if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ingredient.setName(ingredientRequest.getName());
+        ingredient.setCategory(categories.stream().filter(
+                category -> category.getId().equals(ingredientRequest.getCategoryId())
+        ).findFirst().get());
         ingredientRepository.save(ingredient);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
