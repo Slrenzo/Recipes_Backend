@@ -2,9 +2,19 @@ package com.iut.rodez.Recipes.model;
 
 public class IngredientRequest {
 
+    private String image;
+
     private String name;
 
     private String categoryId;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;

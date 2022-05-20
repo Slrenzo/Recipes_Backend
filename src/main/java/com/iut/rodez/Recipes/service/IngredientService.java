@@ -68,6 +68,7 @@ public class IngredientService {
         if (names.contains(ingredientRequest.getName())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        ingredient.setImage(ingredientRequest.getImage());
         ingredient.setName(ingredientRequest.getName());
         ingredient.setCategory(categories.stream().filter(
                 category -> category.getId().equals(ingredientRequest.getCategoryId())
