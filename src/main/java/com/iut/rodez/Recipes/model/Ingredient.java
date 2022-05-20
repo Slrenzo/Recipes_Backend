@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 public class Ingredient {
 
+    private String image;
+
     @PrePersist
     private void ensureId(){
         this.setId(RandomString.make(15));
@@ -16,9 +18,18 @@ public class Ingredient {
 
     private String name;
 
+
     @OneToOne
     @JoinColumn(name = "id_category")
     private Category category;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getId() {
         return id;
