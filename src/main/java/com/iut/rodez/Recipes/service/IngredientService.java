@@ -1,6 +1,5 @@
 package com.iut.rodez.Recipes.service;
 
-import com.iut.rodez.Recipes.model.Category;
 import com.iut.rodez.Recipes.model.Ingredient;
 import com.iut.rodez.Recipes.model.IngredientRequest;
 import com.iut.rodez.Recipes.repository.CategoryRepository;
@@ -25,9 +24,6 @@ public class IngredientService {
     private IngredientRepository ingredientRepository;
 
     @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
     private CategoryRepository categoryRepository;
 
     public List<Ingredient> getIngredients(String name, List<String> ids_category) {
@@ -44,7 +40,7 @@ public class IngredientService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Ingredient> getIngredientById(String id) {;
+    public Optional<Ingredient> getIngredientById(String id) {
         if (!ingredientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -77,28 +73,21 @@ public class IngredientService {
     }
 
     public ResponseEntity<HttpStatus> putIngredient(IngredientRequest ingredientRequest, String id) {
-        if (ingredientRepository.findById(id).isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!ingredientRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Ingredient ingredient = ingredientRepository.findById(id).get();
-        List<Category> categories;
-        categories = categoryService.getCategories();
-        List<String> categoryIds = new ArrayList<>();
-        categories.forEach(category -> categoryIds.add(category.getId()));
-        if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
         List<String> names = new ArrayList<>();
         ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
-        if (!ingredient.getName().equals(ingredientRequest.getName()) && names.contains(ingredientRequest.getName())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())
+            || (!ingredient.getName().equals(ingredientRequest.getName())
+                && names.contains(ingredientRequest.getName()))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         ingredient.setName(ingredientRequest.getName());
-        ingredient.setCategory(categories.stream().filter(
-                category -> category.getId().equals(ingredientRequest.getCategoryId())
-        ).findFirst().get());
+        ingredient.setCategory(categoryRepository.findById(ingredientRequest.getCategoryId()).get());
         ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
         return new ResponseEntity<>(HttpStatus.OK);
