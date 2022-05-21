@@ -98,7 +98,7 @@ public class IngredientService {
         ingredientRepository.findAll().forEach(ingredients::add);
         List<String> names = new ArrayList<>();
         ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
-        if (names.contains(ingredientRequest.getName())) {
+        if (!ingredient.getName().equals(ingredientRequest.getName()) && names.contains(ingredientRequest.getName())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         ingredient.setName(ingredientRequest.getName());
