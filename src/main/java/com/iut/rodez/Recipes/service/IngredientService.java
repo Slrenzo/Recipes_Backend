@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +39,11 @@ public class IngredientService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Ingredient> getIngredientById(String id) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepository.findAll().forEach(ingredients::add);
-        return ingredients
-                .stream()
-                .filter(ingredient -> ingredient.getId().equals(id))
-                .findFirst();
+    public Optional<Ingredient> getIngredientById(String id) {;
+        if (!ingredientRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return ingredientRepository.findById(id);
     }
 
     public ResponseEntity<HttpStatus> postIngredient(IngredientRequest ingredientRequest) {
