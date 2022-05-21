@@ -69,12 +69,8 @@ public class IngredientService {
     }
 
     public ResponseEntity<HttpStatus> deleteIngredient(String id) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepository.findAll().forEach(ingredients::add);
-        List<String> ids = new ArrayList<>();
-        ingredients.forEach(ingredient -> ids.add(ingredient.getId()));
-        if (!ids.contains(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!ingredientRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         ingredientRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
