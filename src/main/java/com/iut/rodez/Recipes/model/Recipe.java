@@ -38,6 +38,8 @@ public class Recipe {
 
     private int number_person;
 
+    private String image;
+
     public String getId() {
         return id;
     }
@@ -92,5 +94,13 @@ public class Recipe {
 
     public void setNumber_person(int number_person) {
         this.number_person = number_person;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

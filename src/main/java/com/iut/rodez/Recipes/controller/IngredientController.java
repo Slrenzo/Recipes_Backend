@@ -35,8 +35,8 @@ public class IngredientController {
     }
 
     @DeleteMapping("/ingredients/{id}")
-    public void deleteIngredient(@PathVariable String id) {
-        ingredientService.deleteIngredient(id);
+    public ResponseEntity<HttpStatus> deleteIngredient(@PathVariable String id) {
+        return ingredientService.deleteIngredient(id);
     }
 
     @PutMapping("ingredients/{id}")

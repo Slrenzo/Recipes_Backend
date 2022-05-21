@@ -5,11 +5,9 @@ import com.iut.rodez.Recipes.model.Ingredient;
 import com.iut.rodez.Recipes.model.IngredientRequest;
 import com.iut.rodez.Recipes.repository.CategoryRepository;
 import com.iut.rodez.Recipes.repository.IngredientRepository;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,9 +25,6 @@ public class IngredientService {
 
     @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     public List<Ingredient> getIngredients(String name, List<String> ids_category) {
         List<Ingredient> ingredients = new ArrayList<>();
@@ -72,12 +67,21 @@ public class IngredientService {
         ingredient.setCategory(categories.stream().filter(
                 category -> category.getId().equals(ingredientRequest.getCategoryId())
         ).findFirst().get());
+        ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public void deleteIngredient(String id) {
+    public ResponseEntity<HttpStatus> deleteIngredient(String id) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredients::add);
+        List<String> ids = new ArrayList<>();
+        ingredients.forEach(ingredient -> ids.add(ingredient.getId()));
+        if (!ids.contains(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         ingredientRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<HttpStatus> putIngredient(IngredientRequest ingredientRequest, String id) {
@@ -100,6 +104,7 @@ public class IngredientService {
         ingredient.setCategory(categories.stream().filter(
                 category -> category.getId().equals(ingredientRequest.getCategoryId())
         ).findFirst().get());
+        ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
         return new ResponseEntity<>(HttpStatus.OK);
     }

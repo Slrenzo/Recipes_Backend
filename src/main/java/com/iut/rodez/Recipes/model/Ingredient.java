@@ -20,6 +20,8 @@ public class Ingredient {
     @JoinColumn(name = "id_category")
     private Category category;
 
+    private String image;
+
     public String getId() {
         return id;
     }
@@ -42,5 +44,13 @@ public class Ingredient {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
