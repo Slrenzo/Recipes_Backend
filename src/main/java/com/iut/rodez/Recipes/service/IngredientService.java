@@ -27,13 +27,18 @@ public class IngredientService {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public List<Ingredient> getIngredients(String name, List<String> ids_category) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
+        if (name == null || ids_category == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         return ingredients
                 .stream()
-                .filter(ingredient -> ids_category == null
-                                      || ids_category.isEmpty()
+                .filter(ingredient -> ids_category.isEmpty()
                                       || ids_category.contains(ingredient.getCategory().getId()))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
@@ -47,26 +52,17 @@ public class IngredientService {
     }
 
     public ResponseEntity<HttpStatus> postIngredient(IngredientRequest ingredientRequest) {
-        Ingredient ingredient = new Ingredient();
-        List<Category> categories;
-        categories = categoryService.getCategories();
-        List<String> categoryIds = new ArrayList<>();
-        categories.forEach(category -> categoryIds.add(category.getId()));
-        if (!categoryIds.contains(ingredientRequest.getCategoryId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
         List<String> names = new ArrayList<>();
-        ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
-        if (names.contains(ingredientRequest.getName())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ingredients.forEach(ingredient -> names.add(ingredient.getName()));
+        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())
+            || names.contains(ingredientRequest.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        ingredient.setImage(ingredientRequest.getImage());
+        Ingredient ingredient = new Ingredient();
         ingredient.setName(ingredientRequest.getName());
-        ingredient.setCategory(categories.stream().filter(
-                category -> category.getId().equals(ingredientRequest.getCategoryId())
-        ).findFirst().get());
+        ingredient.setCategory(categoryRepository.findById(ingredientRequest.getCategoryId()).get());
         ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
         return new ResponseEntity<>(HttpStatus.CREATED);
