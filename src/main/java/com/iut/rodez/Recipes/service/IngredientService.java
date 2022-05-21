@@ -86,6 +86,9 @@ public class IngredientService {
     }
 
     public ResponseEntity<HttpStatus> putIngredient(IngredientRequest ingredientRequest, String id) {
+        if (ingredientRepository.findById(id).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Ingredient ingredient = ingredientRepository.findById(id).get();
         List<Category> categories;
         categories = categoryService.getCategories();
