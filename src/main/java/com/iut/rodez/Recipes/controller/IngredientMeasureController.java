@@ -1,11 +1,15 @@
 package com.iut.rodez.Recipes.controller;
 
 import com.iut.rodez.Recipes.model.IngredientMeasure;
+import com.iut.rodez.Recipes.model.IngredientMeasureRequest;
 import com.iut.rodez.Recipes.service.IngredientMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,18 +23,23 @@ public class IngredientMeasureController {
         return ingredientMeasureService.getIngredientsMeasures();
     }
 
+    @GetMapping("/measures/{id}")
+    public Optional<IngredientMeasure> getIngredientsMeasures(@PathVariable String id) {
+        return ingredientMeasureService.getIngredientMeasureById(id);
+    }
+
     @PostMapping("/measures")
-    public void postIngredientMeasure(@RequestBody IngredientMeasure ingredientMeasure) {
-        ingredientMeasureService.postIngredientMeasure(ingredientMeasure);
+    public ResponseEntity<HttpStatus> postIngredientMeasure(@RequestBody IngredientMeasureRequest ingredientMeasureRequest) {
+        return ingredientMeasureService.postIngredientMeasure(ingredientMeasureRequest);
     }
 
     @DeleteMapping("/measures/{id}")
-    public void deleteIngredientMeasure(@PathVariable String id) {
-        ingredientMeasureService.deleteIngredientMeasure(id);
+    public ResponseEntity<HttpStatus> deleteIngredientMeasure(@PathVariable String id) {
+        return ingredientMeasureService.deleteIngredientMeasure(id);
     }
 
     @PutMapping("/measures/{id}")
-    public void putIngredientMeasure(@RequestBody IngredientMeasure ingredientMeasure, @PathVariable String id) {
-        ingredientMeasureService.putIngredientMeasure(ingredientMeasure, id);
+    public ResponseEntity<HttpStatus> putIngredientMeasure(@RequestBody IngredientMeasureRequest ingredientMeasureRequest, @PathVariable String id) {
+        return ingredientMeasureService.putIngredientMeasure(ingredientMeasureRequest, id);
     }
 }
