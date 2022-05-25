@@ -1,6 +1,6 @@
 package com.iut.rodez.Recipes.model;
 
-public class IngredientMeasureRequest {
+public class IngredientsRequest {
 
     private String ingredientId;
 

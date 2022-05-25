@@ -30,7 +30,7 @@ public class Recipe {
     @JoinTable(name = "link_recipe",
               joinColumns = @JoinColumn(name = "id_recipe"),
               inverseJoinColumns = @JoinColumn(name = "id_ingredient_measure"))
-    private List<IngredientMeasure> ingredientsMeasures = new ArrayList<>();
+    private List<Ingredients> ingredients = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "id_recipe")
@@ -72,12 +72,12 @@ public class Recipe {
         this.type = type;
     }
 
-    public List<IngredientMeasure> getIngredientsMeasures() {
-        return ingredientsMeasures;
+    public List<Ingredients> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientsMeasures(List<IngredientMeasure> ingredientsMeasures) {
-        this.ingredientsMeasures = ingredientsMeasures;
+    public void setIngredients(List<Ingredients> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public List<Step> getSteps() {

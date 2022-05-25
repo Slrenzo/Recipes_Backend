@@ -5,7 +5,7 @@ import net.bytebuddy.utility.RandomString;
 import javax.persistence.*;
 
 @Entity
-public class IngredientMeasure {
+public class Ingredients {
 
     @PrePersist
     private void ensureId(){
