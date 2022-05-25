@@ -4,7 +4,6 @@ import com.iut.rodez.Recipes.model.IngredientMeasure;
 import com.iut.rodez.Recipes.model.IngredientMeasureRequest;
 import com.iut.rodez.Recipes.service.IngredientMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
