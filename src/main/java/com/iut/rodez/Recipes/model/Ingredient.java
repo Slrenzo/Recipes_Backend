@@ -16,7 +16,6 @@ public class Ingredient {
 
     private String name;
 
-
     @OneToOne
     @JoinColumn(name = "id_category")
     private Category category;

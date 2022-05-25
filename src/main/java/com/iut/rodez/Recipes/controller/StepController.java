@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,6 +18,11 @@ public class StepController {
     @GetMapping("/steps")
     public List<Step> getSteps() {
         return stepService.getSteps();
+    }
+
+    @GetMapping("/steps/{id}")
+    public Optional<Step> getStepsById(@PathVariable String id) {
+        return stepService.getStepsById(id);
     }
 
     @PostMapping("/steps")
