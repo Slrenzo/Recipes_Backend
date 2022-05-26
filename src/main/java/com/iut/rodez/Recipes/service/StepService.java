@@ -51,7 +51,7 @@ public class StepService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void putStep(Step step, String id) {
+    public ResponseEntity<HttpStatus> putStep(Step step, String id) {
         if (!stepRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -59,5 +59,6 @@ public class StepService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         stepRepository.save(step);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
