@@ -1,7 +1,6 @@
 package com.iut.rodez.Recipes.service;
 
 import com.iut.rodez.Recipes.model.Category;
-import org.hibernate.AssertionFailure;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,9 +16,6 @@ class CategoryServiceTest {
     @Autowired
     private CategoryService categoryService;
 
-    @Test
-    void contextLoads() {
-    }
     @Test
     void testGetCategories() {
         List<Category> expected = createList();
