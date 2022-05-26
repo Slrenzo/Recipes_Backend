@@ -2,6 +2,7 @@ package com.iut.rodez.Recipes.controller;
 
 import com.iut.rodez.Recipes.model.Ingredients;
 import com.iut.rodez.Recipes.model.IngredientsRequest;
+import com.iut.rodez.Recipes.model.IngredientsResponse;
 import com.iut.rodez.Recipes.service.IngredientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,12 @@ public class IngredientsController {
     private IngredientsService ingredientsService;
 
     @GetMapping("/recipe-ingredients")
-    public List<Ingredients> getIngredients() {
+    public List<IngredientsResponse> getIngredients() {
         return ingredientsService.getIngredients();
     }
 
     @GetMapping("/recipe-ingredients/{id}")
-    public Optional<Ingredients> getIngredientsById(@PathVariable String id) {
+    public IngredientsResponse getIngredientsById(@PathVariable String id) {
         return ingredientsService.getIngredientsById(id);
     }
 

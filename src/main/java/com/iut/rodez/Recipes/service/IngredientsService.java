@@ -2,6 +2,7 @@ package com.iut.rodez.Recipes.service;
 
 import com.iut.rodez.Recipes.model.Ingredients;
 import com.iut.rodez.Recipes.model.IngredientsRequest;
+import com.iut.rodez.Recipes.model.IngredientsResponse;
 import com.iut.rodez.Recipes.repository.IngredientsRepository;
 import com.iut.rodez.Recipes.repository.IngredientRepository;
 import com.iut.rodez.Recipes.repository.UnitRepository;
@@ -27,17 +28,34 @@ public class IngredientsService {
     @Autowired
     private UnitRepository unitRepository;
 
-    public List<Ingredients> getIngredients() {
+    public List<IngredientsResponse> getIngredients() {
         List<Ingredients> ingredients = new ArrayList<>();
         ingredientsRepository.findAll().forEach(ingredients::add);
-        return ingredients;
+        List<IngredientsResponse> ingredientsResponses = new ArrayList<>();
+        ingredients.forEach(ingredients1 -> {
+            IngredientsResponse ing = new IngredientsResponse();
+            ing.setId(ingredients1.getId());
+            ing.setName(ingredients1.getIngredient().getName());
+            ing.setCategory(ingredients1.getIngredient().getCategory().getName());
+            ing.setQuantity(ingredients1.getQuantity());
+            ing.setUnit(ingredients1.getUnit().getName());
+            ingredientsResponses.add(ing);
+        });
+        return ingredientsResponses;
     }
 
-    public Optional<Ingredients> getIngredientsById(String id) {
+    public IngredientsResponse getIngredientsById(String id) {
         if (!ingredientsRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return ingredientsRepository.findById(id);
+        Ingredients ingredients = ingredientsRepository.findById(id).get();
+        IngredientsResponse ingredientsResponse = new IngredientsResponse();
+        ingredientsResponse.setId(ingredients.getId());
+        ingredientsResponse.setName(ingredients.getIngredient().getName());
+        ingredientsResponse.setCategory(ingredients.getIngredient().getCategory().getName());
+        ingredientsResponse.setQuantity(ingredients.getQuantity());
+        ingredientsResponse.setUnit(ingredients.getUnit().getName());
+        return ingredientsResponse;
     }
 
     public ResponseEntity<HttpStatus> postIngredients(IngredientsRequest ingredientsRequest) {
