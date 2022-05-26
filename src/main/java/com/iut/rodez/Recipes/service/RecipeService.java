@@ -58,7 +58,11 @@ public class RecipeService {
             ingredients.add(ingredientsService.getIngredientsById(ing.getId()));
         });
         recipeResponse.setIngredients(ingredients);
-        recipeResponse.setSteps(recipe.getSteps());
+        List<Step> steps = new ArrayList<>(recipe.getSteps());
+        recipe.getSteps().forEach(step -> {
+            steps.set(step.getStep_order() - 1, step);
+        });
+        recipeResponse.setSteps(steps);
         recipeResponse.setPeople(recipe.getNumber_person());
         recipeResponse.setImage(recipe.getImage());
         return  recipeResponse;
