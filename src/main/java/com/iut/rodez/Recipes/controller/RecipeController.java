@@ -1,6 +1,8 @@
 package com.iut.rodez.Recipes.controller;
 
 import com.iut.rodez.Recipes.model.Recipe;
+import com.iut.rodez.Recipes.model.RecipeResponse;
+import com.iut.rodez.Recipes.model.RecipeShortResponse;
 import com.iut.rodez.Recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,13 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes")
-    public List<Recipe> getRecipes(@RequestParam(value = "name", required = false) String name,
-                                   @RequestParam(value = "type", required = false) List<String> ids_type_recipe) {
+    public List<RecipeShortResponse> getRecipes(@RequestParam(value = "name") String name,
+                                                @RequestParam(value = "type") List<String> ids_type_recipe) {
         return recipeService.getRecipes(name, ids_type_recipe);
     }
 
     @GetMapping("/recipes/{id}")
-    public Optional<Recipe> getRecipesById(@PathVariable("id") String id) {
+    public RecipeResponse getRecipesById(@PathVariable("id") String id) {
         return recipeService.getRecipeById(id);
     }
 

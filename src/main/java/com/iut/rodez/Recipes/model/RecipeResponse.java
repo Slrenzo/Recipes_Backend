@@ -1,42 +1,22 @@
 package com.iut.rodez.Recipes.model;
 
-
-import net.bytebuddy.utility.RandomString;
-
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class Recipe {
+public class RecipeResponse {
 
-    @PrePersist
-    private void ensureId(){
-        this.setId(RandomString.make(15));
-    }
-
-    @Id
     private String id;
 
     private String name;
 
     private int time;
 
-    @OneToOne
-    @JoinColumn(name = "id_type")
     private Type type;
 
-    @OneToMany
-    @JoinTable(name = "link_recipe",
-              joinColumns = @JoinColumn(name = "id_recipe"),
-              inverseJoinColumns = @JoinColumn(name = "id_ingredients"))
-    private List<Ingredients> ingredients = new ArrayList<>();
+    private List<IngredientsResponse> ingredients;
 
-    @OneToMany
-    @JoinColumn(name = "id_recipe")
-    private List<Step> steps = new ArrayList<>();
+    private List<Step> steps;
 
-    private int number_person;
+    private int people;
 
     private String image;
 
@@ -72,11 +52,11 @@ public class Recipe {
         this.type = type;
     }
 
-    public List<Ingredients> getIngredients() {
+    public List<IngredientsResponse> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredients> ingredients) {
+    public void setIngredients(List<IngredientsResponse> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -88,12 +68,12 @@ public class Recipe {
         this.steps = steps;
     }
 
-    public int getNumber_person() {
-        return number_person;
+    public int getPeople() {
+        return people;
     }
 
-    public void setNumber_person(int number_person) {
-        this.number_person = number_person;
+    public void setPeople(int people) {
+        this.people = people;
     }
 
     public String getImage() {
