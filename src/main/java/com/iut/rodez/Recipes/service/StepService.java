@@ -52,6 +52,12 @@ public class StepService {
     }
 
     public void putStep(Step step, String id) {
+        if (!stepRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (step.getStep_order() <= 0 || step.getDescr().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         stepRepository.save(step);
     }
 }
