@@ -15,10 +15,8 @@ public class TypeService {
     private TypeRepository typeRepository;
 
     public List<Type> getTypesRecipe() {
-        List typesRecipe = new ArrayList<>();
-        typeRepository.findAll().forEach(type -> {
-            typesRecipe.add(type);
-        });
+        List<Type> typesRecipe = new ArrayList<>();
+        typeRepository.findAll().forEach(typesRecipe::add);
         return typesRecipe;
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -70,14 +69,10 @@ public class RecipeService {
         recipeResponse.setTime(recipe.getTime());
         recipeResponse.setType(recipe.getType());
         List<IngredientsResponse> ingredients = new ArrayList<>();
-        recipe.getIngredients().forEach(ing -> {
-            ingredients.add(ingredientsService.getIngredientsById(ing.getId()));
-        });
+        recipe.getIngredients().forEach(ing -> ingredients.add(ingredientsService.getIngredientsById(ing.getId())));
         recipeResponse.setIngredients(ingredients);
         List<Step> steps = new ArrayList<>(recipe.getSteps());
-        recipe.getSteps().forEach(step -> {
-            steps.set(step.getStep_order() - 1, step);
-        });
+        recipe.getSteps().forEach(step -> steps.set(step.getStep_order() - 1, step));
         recipeResponse.setSteps(steps);
         recipeResponse.setPeople(recipe.getNumber_person());
         recipeResponse.setImage(recipe.getImage());

@@ -4,7 +4,6 @@ package com.iut.rodez.Recipes.model;
 import net.bytebuddy.utility.RandomString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

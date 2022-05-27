@@ -2,12 +2,10 @@ package com.iut.rodez.Recipes.service;
 
 import com.iut.rodez.Recipes.model.Step;
 import com.iut.rodez.Recipes.repository.StepRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -22,9 +20,7 @@ public class StepService {
 
     public List<Step> getSteps() {
         List<Step> steps = new ArrayList<>();
-        stepRepository.findAll().forEach(step -> {
-            steps.add(step);
-        });
+        stepRepository.findAll().forEach(steps::add);
         return steps;
     }
 

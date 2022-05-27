@@ -1,6 +1,5 @@
 package com.iut.rodez.Recipes.controller;
 
-import com.iut.rodez.Recipes.model.Ingredients;
 import com.iut.rodez.Recipes.model.IngredientsRequest;
 import com.iut.rodez.Recipes.model.IngredientsResponse;
 import com.iut.rodez.Recipes.service.IngredientsService;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController

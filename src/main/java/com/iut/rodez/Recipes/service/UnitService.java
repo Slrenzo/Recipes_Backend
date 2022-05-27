@@ -16,9 +16,7 @@ public class UnitService {
 
     public List<Unit> getUnits() {
         List<Unit> units = new ArrayList<>();
-        unitRepository.findAll().forEach(unit -> {
-            units.add(unit);
-        });
+        unitRepository.findAll().forEach(units::add);
         return units;
     }
 }
