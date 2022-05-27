@@ -128,8 +128,17 @@ public class RecipeService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public void deleteRecipe(String id) {
+    public ResponseEntity<HttpStatus> deleteRecipe(String id) {
+        if (!recipeRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        Recipe recipe = recipeRepository.findById(id).get();
+        List<String> ingredientsIds = new ArrayList<>();
+        recipe.getIngredients().forEach(ingredients -> ingredientsIds.add(ingredients.getId()));
+        recipe.getSteps().forEach(step -> stepRepository.deleteById(step.getId()));
         recipeRepository.deleteById(id);
+        ingredientsIds.forEach(ingredientsId -> ingredientsRepository.deleteById(ingredientsId));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public void putRecipe(Recipe recipe, String id) {

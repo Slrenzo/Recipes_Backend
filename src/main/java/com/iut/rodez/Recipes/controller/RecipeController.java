@@ -42,8 +42,8 @@ public class RecipeController {
     }
 
     @DeleteMapping("/recipes/{id}")
-    public void deleteRecipe(@PathVariable String id) {
-        recipeService.deleteRecipe(id);
+    public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable String id) {
+        return recipeService.deleteRecipe(id);
     }
 
     @PutMapping("recipes/{id}")
