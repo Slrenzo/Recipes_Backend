@@ -141,8 +141,8 @@ public class RecipeService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void putRecipe(Recipe recipe, String id) {
-        recipeRepository.save(recipe);
+    public ResponseEntity<HttpStatus> putRecipe(RecipeRequest recipeRequest, String id) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public List<RecipeShortResponse> getRecipeForHomepage() {
