@@ -18,7 +18,7 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/")
-    public List<Recipe> getRecipeForHomepage() {
+    public List<RecipeShortResponse> getRecipeForHomepage() {
         return recipeService.getRecipeForHomepage();
     }
 

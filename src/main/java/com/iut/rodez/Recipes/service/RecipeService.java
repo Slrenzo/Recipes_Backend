@@ -80,13 +80,19 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
-    public List<Recipe> getRecipeForHomepage() {
-        List<Recipe> allRecipes = new ArrayList<>();
-        recipeRepository.findAll().forEach(allRecipes::add);
-        List<Recipe> recipes = new ArrayList<>(0);
-        while (recipes.size() < 8 && recipes.size() < allRecipes.size()) {
-            recipes.add(allRecipes.get(recipes.size()));
+    public List<RecipeShortResponse> getRecipeForHomepage() {
+        List<Recipe> recipes = new ArrayList<>();
+        recipeRepository.findAll().forEach(recipes::add);
+        List<RecipeShortResponse> recipeShortResponses = new ArrayList<>(0);
+        while (recipeShortResponses.size() < 8 && recipeShortResponses.size() < recipes.size()) {
+            Recipe recipe = recipes.get(recipeShortResponses.size());
+            RecipeShortResponse recipeShortResponse = new RecipeShortResponse();
+            recipeShortResponse.setId(recipe.getId());
+            recipeShortResponse.setName(recipe.getName());
+            recipeShortResponse.setTime(recipe.getTime());
+            recipeShortResponse.setImage(recipe.getImage());
+            recipeShortResponses.add(recipeShortResponse);
         }
-        return recipes;
+        return recipeShortResponses;
     }
 }
