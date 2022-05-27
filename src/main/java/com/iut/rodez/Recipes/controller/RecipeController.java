@@ -1,10 +1,13 @@
 package com.iut.rodez.Recipes.controller;
 
 import com.iut.rodez.Recipes.model.Recipe;
+import com.iut.rodez.Recipes.model.RecipeRequest;
 import com.iut.rodez.Recipes.model.RecipeResponse;
 import com.iut.rodez.Recipes.model.RecipeShortResponse;
 import com.iut.rodez.Recipes.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +37,8 @@ public class RecipeController {
     }
 
     @PostMapping("/recipes")
-    public void postRecipe(@RequestBody Recipe recipe) {
-        recipeService.postRecipe(recipe);
+    public ResponseEntity<HttpStatus> postRecipe(@RequestBody RecipeRequest recipeRequest) {
+        return recipeService.postRecipe(recipeRequest);
     }
 
     @DeleteMapping("/recipes/{id}")

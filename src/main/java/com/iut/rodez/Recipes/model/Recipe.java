@@ -30,11 +30,11 @@ public class Recipe {
     @JoinTable(name = "link_recipe",
               joinColumns = @JoinColumn(name = "id_recipe"),
               inverseJoinColumns = @JoinColumn(name = "id_ingredients"))
-    private List<Ingredients> ingredients = new ArrayList<>();
+    private List<Ingredients> ingredients;
 
     @OneToMany
     @JoinColumn(name = "id_recipe")
-    private List<Step> steps = new ArrayList<>();
+    private List<Step> steps;
 
     private int number_person;
 
