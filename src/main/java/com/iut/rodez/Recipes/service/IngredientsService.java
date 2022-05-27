@@ -37,6 +37,7 @@ public class IngredientsService {
             ing.setId(ingredients1.getId());
             ing.setName(ingredients1.getIngredient().getName());
             ing.setCategory(ingredients1.getIngredient().getCategory().getName());
+            ing.setImage(ingredients1.getIngredient().getImage());
             ing.setQuantity(ingredients1.getQuantity());
             ing.setUnit(ingredients1.getUnit().getName());
             ingredientsResponses.add(ing);
@@ -53,6 +54,7 @@ public class IngredientsService {
         ingredientsResponse.setId(ingredients.getId());
         ingredientsResponse.setName(ingredients.getIngredient().getName());
         ingredientsResponse.setCategory(ingredients.getIngredient().getCategory().getName());
+        ingredientsResponse.setImage(ingredients.getIngredient().getImage());
         ingredientsResponse.setQuantity(ingredients.getQuantity());
         ingredientsResponse.setUnit(ingredients.getUnit().getName());
         return ingredientsResponse;
@@ -64,11 +66,11 @@ public class IngredientsService {
             || !unitRepository.existsById(ingredientsRequest.getUnitId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Ingredients ingredientMeasure = new Ingredients();
-        ingredientMeasure.setIngredient(ingredientRepository.findById(ingredientsRequest.getIngredientId()).get());
-        ingredientMeasure.setQuantity(ingredientsRequest.getQuantity());
-        ingredientMeasure.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
-        ingredientsRepository.save(ingredientMeasure);
+        Ingredients ingredients = new Ingredients();
+        ingredients.setIngredient(ingredientRepository.findById(ingredientsRequest.getIngredientId()).get());
+        ingredients.setQuantity(ingredientsRequest.getQuantity());
+        ingredients.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
+        ingredientsRepository.save(ingredients);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -84,16 +86,16 @@ public class IngredientsService {
         if (!ingredientsRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Ingredients ingredientMeasure = ingredientsRepository.findById(id).get();
+        Ingredients ingredients = ingredientsRepository.findById(id).get();
         if (!ingredientRepository.existsById(ingredientsRequest.getIngredientId())
                 || ingredientsRequest.getQuantity() <= 0.0
                 || !unitRepository.existsById(ingredientsRequest.getUnitId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        ingredientMeasure.setIngredient(ingredientRepository.findById(ingredientsRequest.getIngredientId()).get());
-        ingredientMeasure.setQuantity(ingredientsRequest.getQuantity());
-        ingredientMeasure.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
-        ingredientsRepository.save(ingredientMeasure);
+        ingredients.setIngredient(ingredientRepository.findById(ingredientsRequest.getIngredientId()).get());
+        ingredients.setQuantity(ingredientsRequest.getQuantity());
+        ingredients.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
+        ingredientsRepository.save(ingredients);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

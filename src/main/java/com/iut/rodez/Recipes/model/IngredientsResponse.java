@@ -8,6 +8,8 @@ public class IngredientsResponse {
 
     private String category;
 
+    private String image;
+
     private double quantity;
 
     private String unit;
@@ -34,6 +36,14 @@ public class IngredientsResponse {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public double getQuantity() {
