@@ -142,6 +142,53 @@ public class RecipeService {
     }
 
     public ResponseEntity<HttpStatus> putRecipe(RecipeRequest recipeRequest, String id) {
+        if (!recipeRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        Recipe recipe = recipeRepository.findById(id).get();
+        if (isBlank(recipeRequest.getName())
+                || recipeRequest.getPeople() <= 0
+                || recipeRequest.getTime() <= 0
+                || !typeRepository.existsById(recipeRequest.getTypeId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        List<Ingredients> ingredients = new ArrayList<>();
+        recipeRequest.getIngredients().forEach(ingredientsRequest -> {
+            if (!ingredientRepository.existsById(ingredientsRequest.getIngredientId())
+                    || ingredientsRequest.getQuantity() <= 0.0
+                    || !unitRepository.existsById(ingredientsRequest.getUnitId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            } else {
+                Ingredients ing = new Ingredients();
+                ing.setIngredient(ingredientRepository.findById(ingredientsRequest.getIngredientId()).get());
+                ing.setQuantity(ingredientsRequest.getQuantity());
+                ing.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
+                ingredientsRepository.save(ing);
+                ingredients.add(ing);
+            }
+        });
+        List<Step> steps = new ArrayList<>(recipeRequest.getSteps());
+        recipeRequest.getSteps().forEach(step -> {
+            if (isBlank(step.getDescr())
+                    || step.getStep_order() <= 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            } else {
+                stepRepository.save(step);
+                steps.set(step.getStep_order() - 1, step);
+            }
+        });
+        List<String> ingredientsIds = new ArrayList<>();
+        recipe.getIngredients().forEach(ing -> ingredientsIds.add(ing.getId()));
+        recipe.getSteps().forEach(step -> stepRepository.deleteById(step.getId()));
+        recipe.setName(recipeRequest.getName());
+        recipe.setNumber_person(recipeRequest.getPeople());
+        recipe.setTime(recipeRequest.getTime());
+        recipe.setImage(recipeRequest.getImage());
+        recipe.setType(typeRepository.findById(recipeRequest.getTypeId()).get());
+        recipe.setIngredients(ingredients);
+        recipe.setSteps(steps);
+        recipeRepository.save(recipe);
+        ingredientsIds.forEach(ingredientsId -> ingredientsRepository.deleteById(ingredientsId));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
