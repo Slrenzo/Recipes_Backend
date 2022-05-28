@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +70,41 @@ class IngredientServiceTest {
 
     @Test
     void getIngredientById() {
+        List<Ingredient> ingredientsTest = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredientsTest::add);
+        ingredientsTest.stream().filter(i -> "kpfVMPPFyyr7H6P".equals(i.getId())
+                        || "pFEJtgWTw1eJgfj".equals(i.getId())
+                        || "kZT2WDH6wwYwMpj".equals(i.getId()))
+                .collect(Collectors.toList());
+
+        try {
+            ingredientService.getIngredientById("idInvented");
+        } catch (ResponseStatusException ingredientNotFound) {
+        }
+
+        for(int index = 0; index < ingredientsTest.size(); index++) {
+            Optional<Ingredient> obtained = ingredientService.getIngredientById(ingredientsTest.get(index).getId());
+
+            nameExpected = ingredientsTest.get(index).getName();
+            idExpected = ingredientsTest.get(index).getId();
+            categoryExpected = ingredientsTest.get(index).getCategory();
+            idCategoryExpected = categoryExpected.getId();
+            nameCategoryExpected = categoryExpected.getName();
+            imageExpected = ingredientsTest.get(index).getImage();
+
+            name = obtained.get().getName();
+            id = obtained.get().getId();
+            category = obtained.get().getCategory();
+            idCategory = category.getId();
+            nameCategory = category.getName();
+            image = obtained.get().getImage();
+
+            assertTrue(id.equals(idExpected));
+            assertTrue(name.equals(nameExpected));
+            assertTrue(idCategory.equals(idCategoryExpected));
+            assertTrue(nameCategory.equals(nameCategoryExpected));
+            assertTrue(image.equals(imageExpected));
+        }
     }
 
     @Test
