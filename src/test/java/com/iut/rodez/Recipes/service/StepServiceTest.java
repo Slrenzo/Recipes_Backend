@@ -1,13 +1,18 @@
 package com.iut.rodez.Recipes.service;
 
+import com.iut.rodez.Recipes.model.Ingredient;
 import com.iut.rodez.Recipes.model.Step;
 import com.iut.rodez.Recipes.model.Type;
+import com.iut.rodez.Recipes.repository.StepRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,17 +22,20 @@ class StepServiceTest {
     @Autowired
     private StepService stepService;
 
+    @Autowired
+    private StepRepository stepRepository;
+
+    private String id;
+    private String idTest;
+    private String desc;
+    private String descTest;
+    private int rank;
+    private int rankTest;
+
     @Test
     void getSteps() {
         List<Step> expected = createList();
         List<Step> obtained = stepService.getSteps();
-
-        String id;
-        String idTest;
-        String desc;
-        String descTest;
-        int rank;
-        int rankTest;
 
         for (int index = 0; index < obtained.size(); index++) {
             id = obtained.get(index).getId();
@@ -46,6 +54,30 @@ class StepServiceTest {
 
     @Test
     void getStepsById() {
+        List<Step> stepTest = new ArrayList<>();
+        stepRepository.findAll().forEach(stepTest::add);
+        stepTest.stream().filter(i -> "ru4JZaVe00PUnCy".equals(i.getId())
+                                || "1FPbAMUrhi8YNwK".equals(i.getId())
+                                || "ZQK2h00ECqOgSw7".equals(i.getId()))
+                         .collect(Collectors.toList());
+        /** NOT_FOUND */
+        assertThrows(ResponseStatusException.class, () -> stepService.getStepsById("idNotFoundInDataBase"));
+
+        for(int index = 0; index < stepTest.size(); index++) {
+            Optional<Step> obtained = stepService.getStepsById(stepTest.get(index).getId());
+
+            id = obtained.get().getId();
+            desc = obtained.get().getDescr();
+            rank = obtained.get().getStep_order();
+
+            idTest = stepTest.get(index).getId();
+            descTest = stepTest.get(index).getDescr();
+            rankTest = stepTest.get(index).getStep_order();
+
+            assertTrue(id.equals(idTest));
+            assertTrue(desc.equals(descTest));
+            assertTrue(rank == rankTest);
+        }
     }
 
     @Test

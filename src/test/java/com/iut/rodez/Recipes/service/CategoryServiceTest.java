@@ -17,7 +17,7 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Test
-    void testGetCategories() {
+    void GetCategories() {
         List<Category> expected = createList();
         List<Category> obtained = categoryService.getCategories();
 
