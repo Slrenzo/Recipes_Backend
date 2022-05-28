@@ -47,7 +47,7 @@ class StepServiceTest {
 
             assertTrue(id.equalsIgnoreCase(idTest));
             assertTrue(desc.equals(descTest));
-            assertTrue(rank == rankTest);
+            assertEquals(rank, rankTest);
         }
 
     }
@@ -76,7 +76,7 @@ class StepServiceTest {
 
             assertTrue(id.equals(idTest));
             assertTrue(desc.equals(descTest));
-            assertTrue(rank == rankTest);
+            assertEquals(rank, rankTest);
         }
     }
 

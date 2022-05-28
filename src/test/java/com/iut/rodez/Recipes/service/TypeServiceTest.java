@@ -27,7 +27,7 @@ class TypeServiceTest {
         String nameTest;
         String idTest;
 
-        for (int index = 0; index < obtained.size(); index++) {
+        for (int index = 0; index < expected.size(); index++) {
             name = obtained.get(index).getName();
             id = obtained.get(index).getId();
             nameTest = expected.get(index).getName();
