@@ -7,6 +7,7 @@ import com.iut.rodez.Recipes.repository.IngredientRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.jmx.export.naming.IdentityNamingStrategy;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -42,26 +43,16 @@ class IngredientServiceTest {
     void getIngredients() {
 
         List<String> ids_category = createListIdCategory();
-        try {
-            ingredientService.getIngredients(null, ids_category);
-            assertFalse(false);
-        } catch (ResponseStatusException name_null) {
-            assertTrue(true);
-        }
 
-        try {
-            ingredientService.getIngredients(null, null);
-            assertFalse(false);
-        } catch (ResponseStatusException args_null) {
-            assertTrue(true);
-        }
-
-        try {
-            ingredientService.getIngredients("tomate", null);
-            assertFalse(false);
-        } catch (ResponseStatusException ids_category_null) {
-            assertTrue(true);
-        }
+        /** Http.BAD_REQUEST */
+        assertThrows(ResponseStatusException.class,
+                      () -> ingredientService.getIngredients(null, ids_category));
+        /** Http.BAD_REQUEST */
+        assertThrows(ResponseStatusException.class,
+                      () -> ingredientService.getIngredients(null, null));
+        /** Http.BAD_REQUEST */
+        assertThrows(ResponseStatusException.class,
+                      () -> ingredientService.getIngredients("tomate", null));
 
         assertTrue(firstGetIngredientsTest());
         assertTrue(secondGetIngredientsTest());
@@ -77,10 +68,8 @@ class IngredientServiceTest {
                         || "kZT2WDH6wwYwMpj".equals(i.getId()))
                 .collect(Collectors.toList());
 
-        try {
-            ingredientService.getIngredientById("idInvented");
-        } catch (ResponseStatusException ingredientNotFound) {
-        }
+        /** Http.NOT_FOUND */
+        assertThrows(ResponseStatusException.class, () -> ingredientService.getIngredientById("idInvented"));
 
         for(int index = 0; index < ingredientsTest.size(); index++) {
             Optional<Ingredient> obtained = ingredientService.getIngredientById(ingredientsTest.get(index).getId());
@@ -109,14 +98,17 @@ class IngredientServiceTest {
 
     @Test
     void postIngredient() {
+        //TODO make test
     }
 
     @Test
     void deleteIngredient() {
+        //TODO make test
     }
 
     @Test
     void putIngredient() {
+        //TODO make test
     }
 
     private List<String> createListIdCategory() {
