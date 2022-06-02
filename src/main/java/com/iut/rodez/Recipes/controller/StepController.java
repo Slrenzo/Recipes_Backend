@@ -18,17 +18,17 @@ public class StepController {
     private StepService stepService;
 
     @GetMapping("/steps")
-    public List<Step> getSteps() {
+    public ResponseEntity<List<Step>> getSteps() {
         return stepService.getSteps();
     }
 
     @GetMapping("/steps/{id}")
-    public Optional<Step> getStepsById(@PathVariable String id) {
+    public ResponseEntity<Optional<Step>> getStepsById(@PathVariable String id) {
         return stepService.getStepsById(id);
     }
 
     @PostMapping("/steps")
-    public ResponseEntity<HttpStatus> postStep(@RequestBody Step step) {
+    public ResponseEntity<Step> postStep(@RequestBody Step step) {
         return stepService.postStep(step);
     }
 
@@ -38,7 +38,7 @@ public class StepController {
     }
 
     @PutMapping("/steps/{id}")
-    public ResponseEntity<HttpStatus> putStep(@RequestBody Step step, @PathVariable String id) {
+    public ResponseEntity<Step> putStep(@RequestBody Step step, @PathVariable String id) {
         return stepService.putStep(step, id);
     }
 }

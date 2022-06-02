@@ -1,5 +1,6 @@
 package com.iut.rodez.Recipes.controller;
 
+import com.iut.rodez.Recipes.model.Ingredients;
 import com.iut.rodez.Recipes.model.IngredientsRequest;
 import com.iut.rodez.Recipes.model.IngredientsResponse;
 import com.iut.rodez.Recipes.service.IngredientsService;
@@ -23,12 +24,12 @@ public class IngredientsController {
     }
 
     @GetMapping("/recipe-ingredients/{id}")
-    public IngredientsResponse getIngredientsById(@PathVariable String id) {
+    public ResponseEntity<IngredientsResponse> getIngredientsById(@PathVariable String id) {
         return ingredientsService.getIngredientsById(id);
     }
 
     @PostMapping("/recipe-ingredients")
-    public ResponseEntity<HttpStatus> postIngredients(@RequestBody IngredientsRequest ingredientsRequest) {
+    public ResponseEntity<Ingredients> postIngredients(@RequestBody IngredientsRequest ingredientsRequest) {
         return ingredientsService.postIngredients(ingredientsRequest);
     }
 
@@ -38,7 +39,7 @@ public class IngredientsController {
     }
 
     @PutMapping("/recipe-ingredients/{id}")
-    public ResponseEntity<HttpStatus> putIngredients(@RequestBody IngredientsRequest ingredientsRequest, @PathVariable String id) {
+    public ResponseEntity<Ingredients> putIngredients(@RequestBody IngredientsRequest ingredientsRequest, @PathVariable String id) {
         return ingredientsService.putIngredients(ingredientsRequest, id);
     }
 }

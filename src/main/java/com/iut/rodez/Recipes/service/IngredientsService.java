@@ -44,7 +44,7 @@ public class IngredientsService {
         return new ResponseEntity<>(ingredientsResponses, HttpStatus.OK);
     }
 
-    public IngredientsResponse getIngredientsById(String id) {
+    public ResponseEntity<IngredientsResponse> getIngredientsById(String id) {
         if (!ingredientsRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -56,10 +56,10 @@ public class IngredientsService {
         ingredientsResponse.setImage(ingredients.getIngredient().getImage());
         ingredientsResponse.setQuantity(ingredients.getQuantity());
         ingredientsResponse.setUnit(ingredients.getUnit().getName());
-        return ingredientsResponse;
+        return new ResponseEntity<>(ingredientsResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> postIngredients(IngredientsRequest ingredientsRequest) {
+    public ResponseEntity<Ingredients> postIngredients(IngredientsRequest ingredientsRequest) {
         if (!ingredientRepository.existsById(ingredientsRequest.getIngredientId())
             || ingredientsRequest.getQuantity() <= 0.0
             || !unitRepository.existsById(ingredientsRequest.getUnitId())) {
@@ -70,7 +70,7 @@ public class IngredientsService {
         ingredients.setQuantity(ingredientsRequest.getQuantity());
         ingredients.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
         ingredientsRepository.save(ingredients);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(ingredients, HttpStatus.CREATED);
     }
 
     public ResponseEntity<HttpStatus> deleteIngredients(String id) {
@@ -78,10 +78,10 @@ public class IngredientsService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         ingredientsRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<HttpStatus> putIngredients(IngredientsRequest ingredientsRequest, String id) {
+    public ResponseEntity<Ingredients> putIngredients(IngredientsRequest ingredientsRequest, String id) {
         if (!ingredientsRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -95,6 +95,6 @@ public class IngredientsService {
         ingredients.setQuantity(ingredientsRequest.getQuantity());
         ingredients.setUnit(unitRepository.findById(ingredientsRequest.getUnitId()).get());
         ingredientsRepository.save(ingredients);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 }

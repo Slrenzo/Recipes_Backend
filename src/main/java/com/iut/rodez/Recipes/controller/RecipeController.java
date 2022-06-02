@@ -19,23 +19,23 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/")
-    public List<RecipeShortResponse> getRecipeForHomepage() {
+    public ResponseEntity<List<RecipeShortResponse>> getRecipeForHomepage() {
         return recipeService.getRecipeForHomepage();
     }
 
     @GetMapping("/recipes")
-    public List<RecipeShortResponse> getRecipes(@RequestParam(value = "name") String name,
+    public ResponseEntity<List<RecipeShortResponse>> getRecipes(@RequestParam(value = "name") String name,
                                                 @RequestParam(value = "type") List<String> ids_type_recipe) {
         return recipeService.getRecipes(name, ids_type_recipe);
     }
 
     @GetMapping("/recipes/{id}")
-    public RecipeResponse getRecipesById(@PathVariable("id") String id) {
+    public ResponseEntity<RecipeResponse> getRecipesById(@PathVariable("id") String id) {
         return recipeService.getRecipeById(id);
     }
 
     @PostMapping("/recipes")
-    public ResponseEntity<HttpStatus> postRecipe(@RequestBody RecipeRequest recipeRequest) {
+    public ResponseEntity<RecipeResponse> postRecipe(@RequestBody RecipeRequest recipeRequest) {
         return recipeService.postRecipe(recipeRequest);
     }
 
@@ -45,7 +45,7 @@ public class RecipeController {
     }
 
     @PutMapping("recipes/{id}")
-    public ResponseEntity<HttpStatus> putRecipe(@RequestBody RecipeRequest recipeRequest,@PathVariable String id) {
+    public ResponseEntity<RecipeResponse> putRecipe(@RequestBody RecipeRequest recipeRequest,@PathVariable String id) {
         return recipeService.putRecipe(recipeRequest, id);
     }
 }

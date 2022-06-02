@@ -38,7 +38,7 @@ public class RecipeService {
     @Autowired
     private StepRepository stepRepository;
 
-    public List<RecipeShortResponse> getRecipes(String name, List<String> ids_type_recipe) {
+    public ResponseEntity<List<RecipeShortResponse>> getRecipes(String name, List<String> ids_type_recipe) {
         List<Recipe> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipes::add);
         recipes = recipes
@@ -55,10 +55,10 @@ public class RecipeService {
             recipeShortResponse.setImage(recipe.getImage());
             recipeShortResponses.add(recipeShortResponse);
         });
-        return recipeShortResponses;
+        return new ResponseEntity<>(recipeShortResponses, HttpStatus.OK);
     }
 
-    public RecipeResponse getRecipeById(String id) {
+    public ResponseEntity<RecipeResponse> getRecipeById(String id) {
         if (!recipeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -69,17 +69,17 @@ public class RecipeService {
         recipeResponse.setTime(recipe.getTime());
         recipeResponse.setType(recipe.getType());
         List<IngredientsResponse> ingredients = new ArrayList<>();
-        recipe.getIngredients().forEach(ing -> ingredients.add(ingredientsService.getIngredientsById(ing.getId())));
+        recipe.getIngredients().forEach(ing -> ingredients.add(ingredientsService.getIngredientsById(ing.getId()).getBody()));
         recipeResponse.setIngredients(ingredients);
         List<Step> steps = new ArrayList<>(recipe.getSteps());
         recipe.getSteps().forEach(step -> steps.set(step.getStep_order() - 1, step));
         recipeResponse.setSteps(steps);
         recipeResponse.setPeople(recipe.getNumber_person());
         recipeResponse.setImage(recipe.getImage());
-        return  recipeResponse;
+        return new ResponseEntity<>(recipeResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> postRecipe(RecipeRequest recipeRequest) {
+    public ResponseEntity<RecipeResponse> postRecipe(RecipeRequest recipeRequest) {
         if (isBlank(recipeRequest.getName())
             || recipeRequest.getPeople() <= 0
             || recipeRequest.getTime() <= 0
@@ -120,7 +120,8 @@ public class RecipeService {
         recipe.setIngredients(ingredients);
         recipe.setSteps(steps);
         recipeRepository.save(recipe);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        RecipeResponse recipeResponse = getRecipeById(recipe.getId()).getBody();
+        return new ResponseEntity<>(recipeResponse, HttpStatus.CREATED);
     }
 
     public ResponseEntity<HttpStatus> deleteRecipe(String id) {
@@ -133,10 +134,10 @@ public class RecipeService {
         recipe.getSteps().forEach(step -> stepRepository.deleteById(step.getId()));
         recipeRepository.deleteById(id);
         ingredientsIds.forEach(ingredientsId -> ingredientsRepository.deleteById(ingredientsId));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<HttpStatus> putRecipe(RecipeRequest recipeRequest, String id) {
+    public ResponseEntity<RecipeResponse> putRecipe(RecipeRequest recipeRequest, String id) {
         if (!recipeRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -184,10 +185,11 @@ public class RecipeService {
         recipe.setSteps(steps);
         recipeRepository.save(recipe);
         ingredientsIds.forEach(ingredientsId -> ingredientsRepository.deleteById(ingredientsId));
-        return new ResponseEntity<>(HttpStatus.OK);
+        RecipeResponse recipeResponse = getRecipeById(recipe.getId()).getBody();
+        return new ResponseEntity<>(recipeResponse, HttpStatus.OK);
     }
 
-    public List<RecipeShortResponse> getRecipeForHomepage() {
+    public ResponseEntity<List<RecipeShortResponse>> getRecipeForHomepage() {
         List<Recipe> recipes = new ArrayList<>();
         recipeRepository.findAll().forEach(recipes::add);
         List<RecipeShortResponse> recipeShortResponses = new ArrayList<>(0);
@@ -200,6 +202,6 @@ public class RecipeService {
             recipeShortResponse.setImage(recipe.getImage());
             recipeShortResponses.add(recipeShortResponse);
         }
-        return recipeShortResponses;
+        return new ResponseEntity<>(recipeShortResponses, HttpStatus.OK);
     }
 }

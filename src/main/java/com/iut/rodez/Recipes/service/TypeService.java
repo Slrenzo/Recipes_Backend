@@ -2,7 +2,6 @@ package com.iut.rodez.Recipes.service;
 
 import com.iut.rodez.Recipes.model.Type;
 import com.iut.rodez.Recipes.repository.TypeRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

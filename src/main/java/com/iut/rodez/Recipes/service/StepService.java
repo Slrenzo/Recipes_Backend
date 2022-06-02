@@ -18,25 +18,25 @@ public class StepService {
     @Autowired
     private StepRepository stepRepository;
 
-    public List<Step> getSteps() {
+    public ResponseEntity<List<Step>> getSteps() {
         List<Step> steps = new ArrayList<>();
         stepRepository.findAll().forEach(steps::add);
-        return steps;
+        return new ResponseEntity<>(steps, HttpStatus.OK);
     }
 
-    public Optional<Step> getStepsById(String id) {
+    public ResponseEntity<Optional<Step>> getStepsById(String id) {
         if (!stepRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return stepRepository.findById(id);
+        return new ResponseEntity<>(stepRepository.findById(id), HttpStatus.OK);
     }
 
-    public ResponseEntity<HttpStatus> postStep(Step step) {
+    public ResponseEntity<Step> postStep(Step step) {
         if (step.getStep_order() <= 0 || step.getDescr().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         stepRepository.save(step);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(step, HttpStatus.CREATED);
     }
 
     public ResponseEntity<HttpStatus> deleteStep(String id) {
@@ -44,10 +44,10 @@ public class StepService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         stepRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<HttpStatus> putStep(Step step, String id) {
+    public ResponseEntity<Step> putStep(Step step, String id) {
         if (!stepRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -55,6 +55,6 @@ public class StepService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         stepRepository.save(step);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(step, HttpStatus.OK);
     }
 }
