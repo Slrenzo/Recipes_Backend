@@ -86,6 +86,11 @@ public class RecipeService {
             || !typeRepository.existsById(recipeRequest.getTypeId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        List<String> names = new ArrayList<>();
+        recipeRepository.findAll().forEach(recipe -> names.add(recipe.getName()));
+        if (names.contains(recipeRequest.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
         List<Ingredients> ingredients = new ArrayList<>();
         recipeRequest.getIngredients().forEach(ingredientsRequest -> {
             if (!ingredientRepository.existsById(ingredientsRequest.getIngredientId())
@@ -147,6 +152,11 @@ public class RecipeService {
                 || recipeRequest.getTime() <= 0
                 || !typeRepository.existsById(recipeRequest.getTypeId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        List<String> names = new ArrayList<>();
+        recipeRepository.findAll().forEach(rec -> names.add(rec.getName()));
+        if (!recipeRequest.getName().equals(recipe.getName()) && names.contains(recipeRequest.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
         List<Ingredients> ingredients = new ArrayList<>();
         recipeRequest.getIngredients().forEach(ingredientsRequest -> {
