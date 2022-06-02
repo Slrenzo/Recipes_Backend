@@ -18,7 +18,7 @@ public class IngredientsController {
     private IngredientsService ingredientsService;
 
     @GetMapping("/recipe-ingredients")
-    public List<IngredientsResponse> getIngredients() {
+    public ResponseEntity<List<IngredientsResponse>> getIngredients() {
         return ingredientsService.getIngredients();
     }
 

@@ -27,7 +27,7 @@ public class IngredientsService {
     @Autowired
     private UnitRepository unitRepository;
 
-    public List<IngredientsResponse> getIngredients() {
+    public ResponseEntity<List<IngredientsResponse>> getIngredients() {
         List<Ingredients> ingredients = new ArrayList<>();
         ingredientsRepository.findAll().forEach(ingredients::add);
         List<IngredientsResponse> ingredientsResponses = new ArrayList<>();
@@ -41,7 +41,7 @@ public class IngredientsService {
             ing.setUnit(ingredients1.getUnit().getName());
             ingredientsResponses.add(ing);
         });
-        return ingredientsResponses;
+        return new ResponseEntity<>(ingredientsResponses, HttpStatus.MOVED_PERMANENTLY);
     }
 
     public IngredientsResponse getIngredientsById(String id) {
