@@ -26,42 +26,48 @@ public class IngredientService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Ingredient> getIngredients(String name, List<String> ids_category) {
+    public ResponseEntity<List<Ingredient>> getIngredients(String name, List<String> ids_category) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
         if (name == null || ids_category == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return ingredients
+        ingredients = ingredients
                 .stream()
-                .filter(ingredient -> ids_category.isEmpty()
-                                      || ids_category.contains(ingredient.getCategory().getId()))
+                .filter(ingredient -> ids_category.isEmpty() || ids_category.contains(ingredient.getCategory().getId()))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
+        if (ingredients.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ingredients, HttpStatus.FOUND);
+
     }
 
-    public Optional<Ingredient> getIngredientById(String id) {
+    public ResponseEntity<Optional<Ingredient>> getIngredientById(String id) {
         if (!ingredientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return ingredientRepository.findById(id);
+        return new ResponseEntity<>(ingredientRepository.findById(id), HttpStatus.FOUND);
     }
 
-    public ResponseEntity<HttpStatus> postIngredient(IngredientRequest ingredientRequest) {
+    public ResponseEntity<Ingredient> postIngredient(IngredientRequest ingredientRequest) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(ingredients::add);
+        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         List<String> names = new ArrayList<>();
         ingredients.forEach(ingredient -> names.add(ingredient.getName()));
-        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())
-            || names.contains(ingredientRequest.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if (names.contains(ingredientRequest.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
         Ingredient ingredient = new Ingredient();
         ingredient.setName(ingredientRequest.getName());
         ingredient.setCategory(categoryRepository.findById(ingredientRequest.getCategoryId()).get());
         ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(ingredient, HttpStatus.CREATED);
     }
 
     public ResponseEntity<HttpStatus> deleteIngredient(String id) {
@@ -69,10 +75,10 @@ public class IngredientService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         ingredientRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<HttpStatus> putIngredient(IngredientRequest ingredientRequest, String id) {
+    public ResponseEntity<Ingredient> putIngredient(IngredientRequest ingredientRequest, String id) {
         if (!ingredientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -81,15 +87,17 @@ public class IngredientService {
         ingredientRepository.findAll().forEach(ingredients::add);
         List<String> names = new ArrayList<>();
         ingredients.forEach(ingredient1 -> names.add(ingredient1.getName()));
-        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())
-            || (!ingredient.getName().equals(ingredientRequest.getName())
-                && names.contains(ingredientRequest.getName()))) {
+        if (!categoryRepository.existsById(ingredientRequest.getCategoryId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if (!ingredient.getName().equals(ingredientRequest.getName())
+            && names.contains(ingredientRequest.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
         ingredient.setName(ingredientRequest.getName());
         ingredient.setCategory(categoryRepository.findById(ingredientRequest.getCategoryId()).get());
         ingredient.setImage(ingredientRequest.getImage());
         ingredientRepository.save(ingredient);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ingredient, HttpStatus.PARTIAL_CONTENT);
     }
 }

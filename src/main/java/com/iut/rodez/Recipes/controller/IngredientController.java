@@ -19,18 +19,18 @@ public class IngredientController {
     private IngredientService ingredientService;
 
     @GetMapping("/ingredients")
-    public List<Ingredient> getIngredients(@RequestParam(value = "name") String name,
+    public ResponseEntity<List<Ingredient>> getIngredients(@RequestParam(value = "name") String name,
                                            @RequestParam(value = "category") List<String> ids_category) {
         return ingredientService.getIngredients(name, ids_category);
     }
 
     @GetMapping("/ingredients/{id}")
-    public Optional<Ingredient> getIngredientsById(@PathVariable("id") String id) {
+    public ResponseEntity<Optional<Ingredient>> getIngredientsById(@PathVariable("id") String id) {
         return ingredientService.getIngredientById(id);
     }
 
     @PostMapping("/ingredients")
-    public ResponseEntity<HttpStatus> postIngredient(@RequestBody IngredientRequest ingredientRequest) {
+    public ResponseEntity<Ingredient> postIngredient(@RequestBody IngredientRequest ingredientRequest) {
         return ingredientService.postIngredient(ingredientRequest);
     }
 
@@ -40,7 +40,7 @@ public class IngredientController {
     }
 
     @PutMapping("ingredients/{id}")
-    public ResponseEntity<HttpStatus> putIngredient(@RequestBody IngredientRequest ingredientRequest,@PathVariable String id) {
+    public ResponseEntity<Ingredient> putIngredient(@RequestBody IngredientRequest ingredientRequest,@PathVariable String id) {
         return ingredientService.putIngredient(ingredientRequest, id);
     }
 }
