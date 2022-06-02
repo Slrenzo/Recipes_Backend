@@ -20,7 +20,7 @@ public class CategoryService {
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(categories::add);
-        return new ResponseEntity<>(categories, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
 }

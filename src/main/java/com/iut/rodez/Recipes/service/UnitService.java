@@ -19,6 +19,6 @@ public class UnitService {
     public ResponseEntity<List<Unit>> getUnits() {
         List<Unit> units = new ArrayList<>();
         unitRepository.findAll().forEach(units::add);
-        return new ResponseEntity<>(units, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(units, HttpStatus.OK);
     }
 }

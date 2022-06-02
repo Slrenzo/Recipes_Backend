@@ -40,7 +40,7 @@ public class IngredientService {
         if (ingredients.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ingredients, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(ingredients, HttpStatus.OK);
 
     }
 
@@ -48,7 +48,7 @@ public class IngredientService {
         if (!ingredientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ingredientRepository.findById(id), HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(ingredientRepository.findById(id), HttpStatus.OK);
     }
 
     public ResponseEntity<Ingredient> postIngredient(IngredientRequest ingredientRequest) {

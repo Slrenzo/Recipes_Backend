@@ -20,6 +20,6 @@ public class TypeService {
     public ResponseEntity<List<Type>> getTypesRecipe() {
         List<Type> typesRecipe = new ArrayList<>();
         typeRepository.findAll().forEach(typesRecipe::add);
-        return new ResponseEntity<>(typesRecipe, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(typesRecipe, HttpStatus.OK);
     }
 }

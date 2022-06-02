@@ -41,7 +41,7 @@ public class IngredientsService {
             ing.setUnit(ingredients1.getUnit().getName());
             ingredientsResponses.add(ing);
         });
-        return new ResponseEntity<>(ingredientsResponses, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(ingredientsResponses, HttpStatus.OK);
     }
 
     public IngredientsResponse getIngredientsById(String id) {
