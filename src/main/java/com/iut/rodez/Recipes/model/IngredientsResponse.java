@@ -2,7 +2,7 @@ package com.iut.rodez.Recipes.model;
 
 public class IngredientsResponse {
 
-    private String idIngredient;
+    private String ingredientId;
 
     private String name;
 
@@ -14,12 +14,12 @@ public class IngredientsResponse {
 
     private String unit;
 
-    public String getIdIngredient() {
-        return idIngredient;
+    public String getIngredientId() {
+        return ingredientId;
     }
 
-    public void setIdIngredient(String idIngredient) {
-        this.idIngredient = idIngredient;
+    public void setIngredientId(String ingredientId) {
+        this.ingredientId = ingredientId;
     }
 
     public String getName() {
