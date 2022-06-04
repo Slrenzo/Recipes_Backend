@@ -37,9 +37,6 @@ public class IngredientService {
                 .filter(ingredient -> ids_category.isEmpty() || ids_category.contains(ingredient.getCategory().getId()))
                 .filter(ingredient -> isBlank(name) || ingredient.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
-        if (ingredients.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
 
     }
