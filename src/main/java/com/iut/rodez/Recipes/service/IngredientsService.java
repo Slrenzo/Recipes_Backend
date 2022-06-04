@@ -33,7 +33,7 @@ public class IngredientsService {
         List<IngredientsResponse> ingredientsResponses = new ArrayList<>();
         ingredients.forEach(ingredients1 -> {
             IngredientsResponse ing = new IngredientsResponse();
-            ing.setId(ingredients1.getId());
+            ing.setIdIngredient(ingredients1.getIngredient().getId());
             ing.setName(ingredients1.getIngredient().getName());
             ing.setCategory(ingredients1.getIngredient().getCategory().getName());
             ing.setImage(ingredients1.getIngredient().getImage());
@@ -50,7 +50,7 @@ public class IngredientsService {
         }
         Ingredients ingredients = ingredientsRepository.findById(id).get();
         IngredientsResponse ingredientsResponse = new IngredientsResponse();
-        ingredientsResponse.setId(ingredients.getId());
+        ingredientsResponse.setIdIngredient(ingredients.getIngredient().getId());
         ingredientsResponse.setName(ingredients.getIngredient().getName());
         ingredientsResponse.setCategory(ingredients.getIngredient().getCategory().getName());
         ingredientsResponse.setImage(ingredients.getIngredient().getImage());
