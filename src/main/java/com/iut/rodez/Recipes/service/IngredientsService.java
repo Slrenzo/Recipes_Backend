@@ -35,7 +35,7 @@ public class IngredientsService {
             IngredientsResponse ing = new IngredientsResponse();
             ing.setIngredientId(ingredients1.getIngredient().getId());
             ing.setName(ingredients1.getIngredient().getName());
-            ing.setCategory(ingredients1.getIngredient().getCategory().getName());
+            ing.setCategory(ingredients1.getIngredient().getCategory());
             ing.setImage(ingredients1.getIngredient().getImage());
             ing.setQuantity(ingredients1.getQuantity());
             ing.setUnit(ingredients1.getUnit().getName());
@@ -52,7 +52,7 @@ public class IngredientsService {
         IngredientsResponse ingredientsResponse = new IngredientsResponse();
         ingredientsResponse.setIngredientId(ingredients.getIngredient().getId());
         ingredientsResponse.setName(ingredients.getIngredient().getName());
-        ingredientsResponse.setCategory(ingredients.getIngredient().getCategory().getName());
+        ingredientsResponse.setCategory(ingredients.getIngredient().getCategory());
         ingredientsResponse.setImage(ingredients.getIngredient().getImage());
         ingredientsResponse.setQuantity(ingredients.getQuantity());
         ingredientsResponse.setUnit(ingredients.getUnit().getName());
